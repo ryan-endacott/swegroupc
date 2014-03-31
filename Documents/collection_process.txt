@@ -1,0 +1,11 @@
+Leader: Hang Cui
+B/U: Bowei Xu
+
+Collection is allowed TA or instroctor to collect all labs/assignments from for a speicific labs or assignments.
+
+1. In the TA web UI, TA has the aothurize to collect labs/assignments. This could be a "bottom" or "submit".
+2. After click this bottom, the web server will run the collection command.
+3. Collection is specific by course->section->student_lastname_initial
+	3.1 All files have been already cataloged be submission, which means all files are in
+		the folder where they suppose to be.
+4. All files that matched will be collected to TAs' local or babbage
