@@ -25,3 +25,14 @@ ALTER TABLE swe.ta
   ADD CONSTRAINT pawprint_foreign_key
         FOREIGN KEY (pawprint) REFERENCES swe.student(pawprint);
 
+-- Create the Professor table.
+
+DROP TABLE IF EXISTS swe.professor;
+CREATE table swe.professor
+(
+  professor_id serial NOT NULL;
+);
+
+ALTER TABLE swe.professor
+  ADD CONSTRAINT professor_id_primary_key PRIMARY KEY (professor_id);
+
