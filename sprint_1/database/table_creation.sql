@@ -1,14 +1,15 @@
-﻿-- Create the Student table.
+﻿CREATE SCHEMA IF NOT EXISTS swe;
 
-CREATE TABLE sprint_1.student
+-- Create the Student table.
+
+DROP TABLE IF EXISTS swe.student;
+CREATE TABLE swe.student
 (
   pawprint character varying(10) NOT NULL,
-  "firstName" character varying(50) NOT NULL,
-  "lastName" character varying(50) NOT NULL,
-  CONSTRAINT pawprint_primary_key PRIMARY KEY (pawprint)
+  first_name character varying(50) NOT NULL,
+  last_name character varying(50) NOT NULL
 );
 
-ALTER TABLE sprint_1.student
-  ADD CONSTRAINT pawprint_unique UNIQUE (pawprint);
+ALTER TABLE swe.student
+  ADD CONSTRAINT pawprint_primary_key PRIMARY KEY (pawprint);
 
--- Create the TA table.
