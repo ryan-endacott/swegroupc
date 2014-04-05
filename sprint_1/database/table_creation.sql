@@ -2,37 +2,27 @@
 
 -- Create the Student table.
 
-DROP TABLE IF EXISTS swe.student;
+DROP TABLE IF EXISTS swe.student CASCADE;
 CREATE TABLE swe.student
 (
-  pawprint character varying(10) NOT NULL,
+  pawprint character varying(10) PRIMARY KEY,
   first_name character varying(50) NOT NULL,
   last_name character varying(50) NOT NULL
 );
-
-ALTER TABLE swe.student
-  ADD CONSTRAINT pawprint_primary_key PRIMARY KEY (pawprint);
 
 -- Create the TA table.
 
 DROP TABLE IF EXISTS swe.ta;
 CREATE TABLE swe.ta
 (
-  pawprint character varying(10) NOT NULL
+  pawprint character varying(10) NOT NULL REFERENCES swe.student(pawprint)
 );
-
-ALTER TABLE swe.ta
-  ADD CONSTRAINT pawprint_foreign_key
-        FOREIGN KEY (pawprint) REFERENCES swe.student(pawprint);
 
 -- Create the Professor table.
 
 DROP TABLE IF EXISTS swe.professor;
 CREATE table swe.professor
 (
-  professor_id serial NOT NULL
+  id serial PRIMARY KEY
 );
-
-ALTER TABLE swe.professor
-  ADD CONSTRAINT professor_id_primary_key PRIMARY KEY (professor_id);
 
