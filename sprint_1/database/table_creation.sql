@@ -23,6 +23,9 @@ CREATE TABLE swe.ta
 DROP TABLE IF EXISTS swe.professor;
 CREATE table swe.professor
 (
-  id serial PRIMARY KEY
+  id serial PRIMARY KEY,
+  title character varying(20),
+  first_name character varying(50) NOT NULL,
+  last_name character varying(50) NOT NULL
 );
 
