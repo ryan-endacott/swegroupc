@@ -38,3 +38,13 @@ CREATE table swe.course
   name character varying(255) NOT NULL,
   instructor_id serial REFERENCES swe.instructor(id)
 );
+
+-- Create the Section table.
+
+DROP TABLE IF EXISTS swe.section;
+CREATE table swe.section
+(
+  id serial PRIMARY KEY,
+  name character varying (255) NOT NULL,
+  course_id serial REFERENCES swe.course(id)
+);
