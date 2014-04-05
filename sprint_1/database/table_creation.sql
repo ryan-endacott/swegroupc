@@ -18,10 +18,10 @@ CREATE TABLE swe.ta
   pawprint character varying(10) NOT NULL REFERENCES swe.student(pawprint)
 );
 
--- Create the Professor table.
+-- Create the Instructor table.
 
-DROP TABLE IF EXISTS swe.professor;
-CREATE table swe.professor
+DROP TABLE IF EXISTS swe.instructor;
+CREATE table swe.instructor
 (
   id serial PRIMARY KEY,
   title character varying(20),
@@ -29,3 +29,12 @@ CREATE table swe.professor
   last_name character varying(50) NOT NULL
 );
 
+-- Create the Course table.
+
+DROP TABLE IF EXISTS swe.course;
+CREATE table swe.course
+(
+  id serial PRIMARY KEY,
+  name character varying(255) NOT NULL,
+  instructor_id serial REFERENCES swe.instructor(id)
+);
