@@ -30,7 +30,7 @@ ALTER TABLE swe.ta
 DROP TABLE IF EXISTS swe.professor;
 CREATE table swe.professor
 (
-  professor_id serial NOT NULL;
+  professor_id serial NOT NULL
 );
 
 ALTER TABLE swe.professor
