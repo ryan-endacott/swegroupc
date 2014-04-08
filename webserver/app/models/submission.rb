@@ -4,6 +4,8 @@ class Submission < ActiveRecord::Base
 
   validate :file_size_under_five_mb
 
+  validates :ip_address, presence: true
+
   def initialize(params = {})
     @file = params.delete(:file)
     super
