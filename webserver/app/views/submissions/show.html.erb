@@ -20,15 +20,5 @@
   <%= @submission.filename %>
 </p>
 
-<p>
-  <strong>Content type:</strong>
-  <%= @submission.content_type %>
-</p>
-
-<p>
-  <strong>File contents:</strong>
-  <%= @submission.file_contents %>
-</p>
-
 <%= link_to 'Edit', edit_submission_path(@submission) %> |
 <%= link_to 'Back', submissions_path %>
