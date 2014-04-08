@@ -1,0 +1,37 @@
+<h1>Listing submissions</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Receipt</th>
+      <th>User</th>
+      <th>Ip address</th>
+      <th>Filename</th>
+      <th>Content type</th>
+      <th>File contents</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @submissions.each do |submission| %>
+      <tr>
+        <td><%= submission.receipt %></td>
+        <td><%= submission.user %></td>
+        <td><%= submission.ip_address %></td>
+        <td><%= submission.filename %></td>
+        <td><%= submission.content_type %></td>
+        <td><%= submission.file_contents %></td>
+        <td><%= link_to 'Show', submission %></td>
+        <td><%= link_to 'Edit', edit_submission_path(submission) %></td>
+        <td><%= link_to 'Destroy', submission, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Submission', new_submission_path %>
