@@ -1,13 +1,11 @@
-<%= simple_form_for(@submission) do |f| %>
+<%= simple_form_for(@submission, html: {multipart: true}) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
     <%= f.input :receipt %>
-    <%= f.association :user %>
     <%= f.input :ip_address %>
-    <%= f.input :filename %>
     <%= f.input :content_type %>
-    <%= f.input :file_contents %>
+    <%= f.input :file, as: :file, label: 'Your assignment to be submitted.' %>
   </div>
 
   <div class="form-actions">
