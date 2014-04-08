@@ -1,9 +1,11 @@
-<%= simple_form_for(@submission, html: {multipart: true}) do |f| %>
+<%= simple_form_for(@submission, html: {class: 'form-vertical', multipart: true}) do |f| %>
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :file, as: :file, label: 'Your assignment to be submitted:' %>
+    <%= f.input :file, as: :file, label: 'File to submit:' %>
   </div>
+
+  <br>
 
   <div class="form-actions">
     <%= f.button :submit %>
