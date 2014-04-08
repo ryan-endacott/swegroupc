@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140407235217) do
+ActiveRecord::Schema.define(version: 20140408005943) do
+
+  create_table "submissions", force: true do |t|
+    t.text     "receipt"
+    t.integer  "user_id"
+    t.text     "ip_address"
+    t.text     "filename"
+    t.text     "content_type"
+    t.binary   "file_contents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
