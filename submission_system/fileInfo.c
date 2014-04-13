@@ -26,12 +26,12 @@ int checkFiles(int numFiles, char** fileName, int* sizes) {
 		if (!in) {
 			sizes[i] = -1;
 			printf("File '%s' does not exist.\n", fileName[i+3]);
-			return 1;
+			return -1;
 		} else {
 			fseek(in, 0L, SEEK_END);
 			size = ftell(in);
 			sizes[i] = size;
-			printf("File '%s' is %d bytes.\n", fileName[i+3], size);
+			//printf("File '%s' is %d bytes.\n", fileName[i+3], size);
 			fclose(in);	
 		}	
 	}

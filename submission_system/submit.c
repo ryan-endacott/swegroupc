@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <time.h>
 #include "fileInfo.h"
 #include "configs.h"
  
@@ -18,11 +19,13 @@ int main(int argc, char** argv) {
 	//checks if files submitted exists and stores their size in array
 	int fileSizes[numFiles];
 	int checkF = checkFiles(numFiles, argv, fileSizes);
-	if(checkF == 1) {
+	if(checkF == -1) {
 		return 2;
 	}
 	
 	//gets student's pawprint
 	char* pawprint = getStuInfo();
-	printf("%s\n", pawprint);	
+
+	//logs info about submission
+	int logFile = initialLog(pawprint, fileSizes, numFiles, argv);	
 }
