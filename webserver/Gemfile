@@ -30,4 +30,5 @@ end
 group :production do
   # postgres for production
   gem 'pg'
+  gem 'rails_12factor' # allow asset compile on heroku
 end
