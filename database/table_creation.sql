@@ -95,6 +95,7 @@ DROP TABLE IF EXISTS swe.assignment;
 CREATE TABLE swe.assignment
 (
     id serial PRIMARY KEY,
+    name character varying(255) NOT NULL,
     course_id serial REFERENCES swe.course(id)
 )
 
@@ -110,5 +111,5 @@ CREATE TABLE swe.submission
     filename character varying(255) NOT NULL,
     file_contents bytea NOT NULL,
     submission_date timestamp NOT NULL,
-    ip timestamp NOT NULL
+    ip character varying(50) NOT NULL
 );

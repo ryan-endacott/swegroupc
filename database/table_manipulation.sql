@@ -16,5 +16,36 @@ INSERT INTO swe.instructor
 -- Add a course.
 
 INSERT INTO swe.course
-    VALUES ('{name}', '{instructor_id}');
+    VALUES ('{name}', {instructor_id});
 
+-- Add a section.
+
+INSERT INTO swe.section
+    VALUES ('{name}', {course_id});
+
+-- Add an assignment.
+
+INSERT INTO swe.assignment
+    VALUES ('{name}', {course_id});
+
+-- Add a submission.
+
+INSERT INTO swe.submission
+    VALUES ('{receipt}', {assignment_id}, {section_id}, '{pawprint}',
+            '{filename}', file_contents, '{submission_date}', '{ip}');
+
+-- Enroll a student in a course and then a section.
+
+INSERT INTO swe.student_course
+    VALUES ('{pawprint}', {course_id});
+
+INSERT INTO swe.student_section
+    VALUES ('{pawprint}', {section_id});
+
+-- Assign a TA to a course and then a section.
+
+INSERT INTO swe.ta_course
+    VALUES ('{pawprint}', {course_id});
+
+INSERT INTO swe.ta_section
+    VALUES ('{pawprint}', {section_id});
