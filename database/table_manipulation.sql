@@ -1,3 +1,5 @@
--- Add an assignment.
+-- Add a student.
 
-SELECT * FROM swe.instructors;
+INSERT INTO swe.student
+VALUES ('{pawprint}', '{first_name}', '{last_name}');
+
