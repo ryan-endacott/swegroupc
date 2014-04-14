@@ -1,3 +1,11 @@
+/*
+ * This document provides the standard layout for inserting new data.
+ * Updates and deletes take a similar form and are left to the implementer.
+ *
+ * As a reference, this is for viewing only. The web service utilizes
+ * a technology known as ActiveRecord, which handles common tasks such as this.
+ */
+
 -- Add a student.
 
 INSERT INTO swe.student
