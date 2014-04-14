@@ -8,4 +8,13 @@ INSERT INTO swe.student
 INSERT INTO swe.ta
     VALUES ('{pawprint}');
 
-INSERT
+-- Add an instructor.
+
+INSERT INTO swe.instructor
+    VALUES ('{title}', '{first_name}', '{last_name}');
+
+-- Add a course.
+
+INSERT INTO swe.course
+    VALUES ('{name}', '{instructor_id}');
+
