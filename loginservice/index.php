@@ -1,10 +1,32 @@
 <?php
 // File for web service for LDAP Authentification
 
+// Utils for forcing HTTPS
+// Determines if the current page is being accessed by https
+function not_using_https() {
+  return (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == "");
+}
+
+// Forces the given page to use https
+// By redirecting to an https version
+function use_https($page) {
+  if (not_using_https()) {
+    redirect($page);
+  }
+}
+
+// Redirects via headers to $new_url
+function redirect($new_url) {
+  header("Location: https://babbage.cs.missouri.edu/~rzeg24/$new_url");
+  die();
+}
+
+use_https('loginservice/');
+// End utils for forcing https
 
 // Get API key so only our web server can access this endpoint.
 // SWEGROUPC_API_KEY
-include("../../secure/database.php");
+include("../secure/database.php");
 
 if(!isset($_GET['username']) || !isset($_GET['password']) || !isset($_GET['api_key'])) {
   exit(json_encode(array("success" => false, "error" => "Incorrect parameters supplied.")));
@@ -17,7 +39,6 @@ if($_GET['api_key'] != SWEGROUPC_API_KEY) {
 if($response = authenticateToUMLDAP($_GET['username'], $_GET['password'])) {
   exit(json_encode(array(
     "success" => true,
-    "error" => "Invalid API key.",
     "response" => $response)));
 }
 else {
