@@ -1,6 +1,6 @@
 class CreateStudentSections < ActiveRecord::Migration
   def change
-    create_table :student_sections do |t|
+    create_table :student_sections, :id => false do |t|
       t.references :student
       t.references :section
     end
