@@ -2,6 +2,6 @@
 #define FILEINFO_H_
 
 int checkArgs(int argCount);
-void checkFiles(int numFiles, char** fileName, int* sizes);
+int checkFiles(int numFiles, char** fileName, int* sizes);
 
 #endif
