@@ -11,7 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140408005943) do
+ActiveRecord::Schema.define(version: 20140414204631) do
+
+  create_table "courses", force: true do |t|
+    t.string   "name"
+    t.integer  "instructor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "courses", ["instructor_id"], name: "index_courses_on_instructor_id"
+
+  create_table "instructors", force: true do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "sections", force: true do |t|
+    t.string   "name"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sections", ["course_id"], name: "index_sections_on_course_id"
+
+  create_table "student_courses", id: false, force: true do |t|
+    t.integer "student_id"
+    t.integer "course_id"
+  end
+
+  add_index "student_courses", ["student_id", "course_id"], name: "index_student_courses_on_student_id_and_course_id", unique: true
+
+  create_table "students", force: true do |t|
+    t.string   "pawprint"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "students", ["pawprint"], name: "index_students_on_pawprint", unique: true
 
   create_table "submissions", force: true do |t|
     t.text     "receipt"
@@ -25,6 +68,14 @@ ActiveRecord::Schema.define(version: 20140408005943) do
   end
 
   add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
+
+  create_table "ta", force: true do |t|
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "ta", ["student_id"], name: "index_ta_on_student_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
