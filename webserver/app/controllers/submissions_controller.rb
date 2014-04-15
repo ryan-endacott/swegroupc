@@ -25,6 +25,7 @@ class SubmissionsController < ApplicationController
   # POST /submissions.json
   def create
     @submission = Submission.new(submission_params)
+    @submission.ip_address = request.remote_ip
 
     respond_to do |format|
       if @submission.save

@@ -1,14 +1,15 @@
 class Submission < ActiveRecord::Base
   belongs_to :user
-  before_save :save_file
 
   validate :file_size_under_five_mb
 
-  validates :ip_address, presence: true
+  validates :ip_address, :receipt, :filename,
+    :content_type, :file_contents, presence: true
 
   def initialize(params = {})
     @file = params.delete(:file)
     super
+    save_file
   end
 
   private
@@ -21,9 +22,13 @@ class Submission < ActiveRecord::Base
     end
 
     def save_file
-      self.filename = sanitize_filename(@file.original_filename)
-      self.content_type = @file.content_type
-      self.file_contents = @file.read
+      # Only save if there is a file to save
+      if @file
+        self.filename = sanitize_filename(@file.original_filename)
+        self.content_type = @file.content_type
+        self.file_contents = @file.read
+        self.receipt = Digest::MD5.hexdigest(self.file_contents)
+      end
     end
 
     def sanitize_filename(filename)
