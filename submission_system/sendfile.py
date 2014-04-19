@@ -10,3 +10,11 @@ filename=[]
 while(i<len(sys.argv)):
 	filename.append(sys.argv[i])
 	i=i+1
+
+i=0
+while(i<len(filename)):
+	files = {filename[i]: open('report.xls', 'rb')}
+	r = requests.post(url, files=files)
+	r.text
+	r.request.get(url)
+	r.status_code
