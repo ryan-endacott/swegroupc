@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419213349) do
+ActiveRecord::Schema.define(version: 20140419213720) do
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -40,20 +40,6 @@ ActiveRecord::Schema.define(version: 20140419213349) do
 
   add_index "sections", ["course_id"], name: "index_sections_on_course_id"
 
-  create_table "student_courses", id: false, force: true do |t|
-    t.integer "student_id"
-    t.integer "course_id"
-  end
-
-  add_index "student_courses", ["student_id", "course_id"], name: "index_student_courses_on_student_id_and_course_id", unique: true
-
-  create_table "student_sections", id: false, force: true do |t|
-    t.integer "student_id"
-    t.integer "section_id"
-  end
-
-  add_index "student_sections", ["student_id", "section_id"], name: "index_student_sections_on_student_id_and_section_id", unique: true
-
   create_table "submissions", force: true do |t|
     t.text     "receipt"
     t.integer  "user_id"
@@ -68,20 +54,6 @@ ActiveRecord::Schema.define(version: 20140419213349) do
 
   add_index "submissions", ["assignment_id"], name: "index_submissions_on_assignment_id"
   add_index "submissions", ["user_id"], name: "index_submissions_on_user_id"
-
-  create_table "ta_courses", id: false, force: true do |t|
-    t.integer "ta_id"
-    t.integer "course_id"
-  end
-
-  add_index "ta_courses", ["ta_id", "course_id"], name: "index_ta_courses_on_ta_id_and_course_id", unique: true
-
-  create_table "ta_sections", id: false, force: true do |t|
-    t.integer "ta_id"
-    t.integer "section_id"
-  end
-
-  add_index "ta_sections", ["ta_id", "section_id"], name: "index_ta_sections_on_ta_id_and_section_id", unique: true
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
