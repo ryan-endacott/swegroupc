@@ -13,15 +13,19 @@ require 'devise/strategies/authenticatable'
 
           # TODO: Fix username and email stuff to be pawprint
           # and make models all inherit from one user class
-          username = params[:user][:email]
+          username = params[:user][:pawprint]
           password = params[:user][:password]
 
           # Authenticate via Babbage LDAP Service
           url = "https://babbage.cs.missouri.edu/~rzeg24/loginservice/?username=#{username}&password=#{password}&api_key=#{ENV['SWEGROUPC_API_KEY']}"
           response = JSON.parse(HTTParty.get(url).body)
 
-          if response['success']
-            user = User.where(email: username).first_or_create
+          if response and response['success']
+
+            email = response["response"]["user"]["emails"][0]
+
+            user = Student.where(pawprint: username, email: email).first ||
+              Student.create(pawprint: username, email: email)
             success!(user)
           else
             fail

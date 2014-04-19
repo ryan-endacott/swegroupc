@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140419220858) do
+ActiveRecord::Schema.define(version: 20140419222508) do
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20140419220858) do
     t.string   "name"
     t.string   "pawprint",                         null: false
     t.string   "type",                             null: false
+    t.string   "encrypted_password"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
