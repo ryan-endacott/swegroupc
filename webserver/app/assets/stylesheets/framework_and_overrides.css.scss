@@ -40,6 +40,7 @@ main {
   @extend .container;
   background-color: #eee;
   padding-bottom: 80px;
+  padding-top: 5px; // For the alert dialog
   width: 100%;
   margin-top: 51px; // accommodate the navbar
   }
