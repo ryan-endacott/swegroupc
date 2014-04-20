@@ -83,7 +83,7 @@ class CoursesController < ApplicationController
   def show
     @assignments = @course.assignments
     @tas = @course.tas
-    @sections = @course.sections
+    @sections = @course.sections.order(:name)
   end
 
   # GET /courses/new
