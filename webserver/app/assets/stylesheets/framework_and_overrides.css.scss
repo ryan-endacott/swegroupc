@@ -1,14 +1,15 @@
 // import the CSS framework
 @import "bootstrap";
 
+
+// Awesome potential Mizzou gold color: #ffcd35 from google keep
+
+// End of our stuff --------------
+
 // make all images responsive by default
 img {
   @extend .img-responsive;
   margin: 0 auto;
-  }
-// override for the 'Home' navigation link
-.navbar-brand {
-  font-size: inherit;
   }
 
 // THESE ARE EXAMPLES YOU CAN MODIFY
