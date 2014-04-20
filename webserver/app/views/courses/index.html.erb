@@ -1,25 +1,28 @@
 <h1>Your Courses</h1>
 
-<table class="table table-bordered">
-  <thead>
-    <tr>
-      <th>Course Name</th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @courses.each do |course| %>
+<div class="panel panel-default">
+  <table class="table table-bordered">
+    <thead>
       <tr>
-        <td><%= link_to course.name, course %></td>
-        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-        <td><%= link_to 'Destroy', course, method: :delete, data: { confirm: 'Are you sure? This will delete ALL associated assignments and submissions.' } %></td>
+        <th>Course Name</th>
+        <th>Assignment Count</th>
+        <th>Edit</th>
+        <th>Delete</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
+    <tbody>
+      <% @courses.each do |course| %>
+        <tr>
+          <td><%= link_to course.name, course %></td>
+          <td><%= course.assignments.count %>
+          <td><%= link_to 'Edit', edit_course_path(course), class: 'btn btn-success' %></td>
+          <td><%= link_to 'Delete', course, method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This will delete ALL associated assignments and submissions.' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<%= link_to 'New Course', new_course_path %>
+
+<%= link_to 'New Course', new_course_path, class: 'btn btn-success' %>

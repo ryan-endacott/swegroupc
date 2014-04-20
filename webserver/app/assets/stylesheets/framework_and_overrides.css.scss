@@ -38,6 +38,7 @@ img {
 // to make views framework-neutral
 main {
   @extend .container;
+  background-color: #eee;
   padding-bottom: 80px;
   padding-top: 5px; // For the alert dialog
   width: 100%;
