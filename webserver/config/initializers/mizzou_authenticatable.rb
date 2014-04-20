@@ -9,26 +9,33 @@ require 'devise/strategies/authenticatable'
       end
 
       def authenticate!
+
         if params[:user]
 
-          # TODO: Fix username and email stuff to be pawprint
-          # and make models all inherit from one user class
           username = params[:user][:pawprint]
           password = params[:user][:password]
 
-          # Authenticate via Babbage LDAP Service
-          url = "https://babbage.cs.missouri.edu/~rzeg24/loginservice/?username=#{username}&password=#{password}&api_key=#{ENV['SWEGROUPC_API_KEY']}"
-          response = JSON.parse(HTTParty.get(url).body)
-
-          if response and response['success']
-
-            email = response["response"]["user"]["emails"][0]
-
-            user = Student.where(pawprint: username, email: email).first ||
-              Student.create(pawprint: username, email: email)
+          # Don't authenticate for development
+          if Rails.env.development?
+            user = User.where(pawprint: username).first ||
+              Student.create(pawprint: username)
             success!(user)
           else
-            fail
+            # Authenticate via Babbage LDAP Service
+
+            url = "https://babbage.cs.missouri.edu/~rzeg24/loginservice/?username=#{username}&password=#{password}&api_key=#{ENV['SWEGROUPC_API_KEY']}"
+            response = JSON.parse(HTTParty.get(url).body)
+
+            if response && response['success']
+
+              email = response["response"]["user"]["emails"][0]
+
+              user = Student.where(pawprint: username, email: email).first ||
+                Student.create(pawprint: username, email: email)
+              success!(user)
+            else
+              fail
+            end
           end
         end
       end
