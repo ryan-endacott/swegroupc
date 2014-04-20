@@ -2,12 +2,9 @@
 <% if user_signed_in? %>
   <% if current_user.instructor? %>
     <li><%= nav_link 'Courses', courses_path %></li>
-    <li><%= nav_link 'Submissions', submissions_path %></li>
-    <li><%= nav_link 'Partition', 'TODO' %></li>
-    <li><%= nav_link 'Create TA', 'TODO' %></li>
   <% end %>
   <% if current_user.ta? %>
-    <li><%= nav_link 'Partition', 'TODO' %></li>
+    <li><%= nav_link 'Courses', courses_path %></li>
   <% end %>
   <% if current_user.student? %>
     <li><%= nav_link 'Submissions', submissions_path %></li>

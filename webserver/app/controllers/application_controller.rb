@@ -5,6 +5,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def instructors_and_tas_only!
+      unless user_signed_in? && (current_user.instructor? || current_user.ta?)
+        flash[:error] = 'You must be an instructor or TA to access that page.'
+        redirect_to root_path
+      end
+    end
+
     def instructors_only!
       unless user_signed_in? && current_user.instructor?
         flash[:error] = 'You must be an instructor to access that page.'
