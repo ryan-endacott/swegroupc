@@ -6,16 +6,16 @@
 <% end %>
 <% if user_signed_in? %>
   <li><%= link_to 'Users', users_path %></li>
-<% end %>
-<% if user_signed_in? #and is a teacher, but I'm not sure how to add that part...%>
-	<li><%= link_to 'Submissions', submissions_path %></li>
-	<li><%= link_to 'Partition', partition_path %></li>
-	<li><%= link_to 'Create TA', create_ta_path %></li>
-<% end %>
-<% if user_signed_in? #and is a TA, but I'm not sure how to check for that either...%>
-	<li><%= link_to 'Partition', partition_path %></li>
-	<li><%= link_to 'Submissions', submissions_path %></li>
-<% end %>
-<% if user_signed_in? #and is just a student %>
-	<li><%= link_to 'Submissions', submissions_path %></li>
+  <% if current_user.instructor? %>
+          <li><%= link_to 'Submissions', submissions_path %></li>
+          <li><%= link_to 'Partition', 'TODO' %></li>
+          <li><%= link_to 'Create TA', 'TODO' %></li>
+  <% end %>
+  <% if current_user.ta? %>
+          <li><%= link_to 'Partition', 'TODO' %></li>
+          <li><%= link_to 'Submissions', submissions_path %></li>
+  <% end %>
+  <% if current_user.student? %>
+          <li><%= link_to 'Submissions', submissions_path %></li>
+  <% end %>
 <% end %>
