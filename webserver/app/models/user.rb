@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
     return self.class == Instructor
   end
 
-  def student?
-    return self.class == Student
+  def student? # TA is also a student
+    return self.class == Student || self.class == Ta
   end
 
   def ta?
