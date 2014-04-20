@@ -10,9 +10,9 @@ class CoursesController < ApplicationController
     new_section = @course.sections.build(section_params)
 
     if new_section.save
-      flash[:notice] = "Successfully added section #{new_section.name}"
+      flash[:notice] = "Successfully added section #{new_section.name}."
     else
-      flash[:error] = new_section.errors.full_messages.to_sentence
+      flash[:error] = new_section.errors.full_messages.to_sentence + '.'
     end
     redirect_to @course
   end
@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
     # Error checks
 
     if params[:pawprint].blank? # must supply non-empty TA pawprint
-      flash[:error] = 'Pawprint cannot be blank.'
+      flash[:error] = "Pawprint can't be blank."
     elsif @course.tas.where(pawprint: params[:pawprint]).count > 0 # check if TA already exists
       flash[:error] = "TA #{params[:pawprint]} already exists for this course."
     elsif Instructor.where(pawprint: params[:pawprint]).count > 0 # Instructor can't be a TA
