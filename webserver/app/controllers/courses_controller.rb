@@ -48,7 +48,7 @@ class CoursesController < ApplicationController
     end
 
     if @course.tas << @ta
-      flash[:notice] = "TA #{params[:pawprint]} successfully added!"
+      flash[:notice] = "Teaching assistant #{params[:pawprint]} successfully added!"
     else
       flash[:error] = "Failed to add TA #{params[:pawprint]}."
     end
