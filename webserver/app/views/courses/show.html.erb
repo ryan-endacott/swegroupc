@@ -2,6 +2,37 @@
 
 <h1>Course Name: <%= @course.name %></h1>
 
+<h3>Teaching Assistants:</h3>
+<div class="panel panel-default">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Pawprint</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @tas.each do |ta| %>
+        <tr>
+          <td><%= ta.name %></td>
+          <td><%= ta.pawprint %></td>
+          <td><%= link_to 'Remove TA', '#TODO', method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <%= form_tag '#todourl' do %>
+          <td>Add Teaching Assistant</td>
+          <td><%= text_field_tag 'ta[pawprint]', nil, placeholder: 'Pawprint'%></td>
+          <td><%= submit_tag 'Create TA', class: 'btn btn-success' %></td>
+        </tr>
+        <% end %>
+    </tbody>
+  </table>
+</div>
+
+
 <h3>Assignments:</h3>
 <div class="panel panel-default">
   <table class="table table-bordered">

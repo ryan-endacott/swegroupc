@@ -2,7 +2,15 @@ class CoursesController < ApplicationController
 
   before_filter :instructors_only!
 
-  before_action :set_course, only: [:show, :edit, :update, :destroy]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :add_ta]
+
+  def add_ta
+    @ta = Ta.new()
+  end
+
+  def remove_ta
+    #TODO
+  end
 
   # GET /courses
   # GET /courses.json
@@ -14,6 +22,7 @@ class CoursesController < ApplicationController
   # GET /courses/1.json
   def show
     @assignments = @course.assignments
+    @tas = @course.tas
   end
 
   # GET /courses/new
@@ -75,5 +84,9 @@ class CoursesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:name)
+    end
+
+    def ta_params
+      params.require(:ta).permit(:pawprint)
     end
 end
