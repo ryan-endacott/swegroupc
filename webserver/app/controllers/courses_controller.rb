@@ -41,6 +41,13 @@ class CoursesController < ApplicationController
       @course.tas.delete(@ta)
       flash[:notice] = "Successfully deleted TA #{@ta.pawprint}."
     end
+
+    # If TA has no more courses, then they are no longer a TA.
+    if @ta.courses.empty?
+      @ta.type = 'Student'
+      @ta.save!
+    end
+
     redirect_to @course
   end
 
