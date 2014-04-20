@@ -18,7 +18,7 @@ require 'devise/strategies/authenticatable'
           # Don't authenticate for development
           if Rails.env.development?
             user = User.where(pawprint: username).first ||
-              Student.create(pawprint: username)
+                Student.create(pawprint: username, email: "#{username}@mail.missouri.edu")
             success!(user)
           else
             # Authenticate via Babbage LDAP Service
@@ -30,7 +30,7 @@ require 'devise/strategies/authenticatable'
 
               email = response["response"]["user"]["emails"][0]
 
-              user = Student.where(pawprint: username, email: email).first ||
+              user = User.where(pawprint: username).first ||
                 Student.create(pawprint: username, email: email)
               success!(user)
             else
