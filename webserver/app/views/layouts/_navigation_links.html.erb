@@ -1,16 +1,16 @@
 <%# add navigation links to this file %>
 <% if user_signed_in? %>
   <% if current_user.instructor? %>
-    <li><%= link_to 'Courses', courses_path %></li>
-    <li><%= link_to 'Submissions', submissions_path %></li>
-    <li><%= link_to 'Partition', 'TODO' %></li>
-    <li><%= link_to 'Create TA', 'TODO' %></li>
+    <li><%= nav_link 'Courses', courses_path %></li>
+    <li><%= nav_link 'Submissions', submissions_path %></li>
+    <li><%= nav_link 'Partition', 'TODO' %></li>
+    <li><%= nav_link 'Create TA', 'TODO' %></li>
   <% end %>
   <% if current_user.ta? %>
-    <li><%= link_to 'Partition', 'TODO' %></li>
+    <li><%= nav_link 'Partition', 'TODO' %></li>
   <% end %>
   <% if current_user.student? %>
-    <li><%= link_to 'Submissions', submissions_path %></li>
+    <li><%= nav_link 'Submissions', submissions_path %></li>
   <% end %>
 <% end %>
 
