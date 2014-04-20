@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
     if new_section.save
       flash[:notice] = "Successfully added section #{new_section.name}"
     else
-      flash[:error] = new_section.errors.first
+      flash[:error] = new_section.errors.full_messages.to_sentence
     end
     redirect_to @course
   end
