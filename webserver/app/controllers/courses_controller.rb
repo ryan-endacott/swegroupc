@@ -3,7 +3,28 @@ class CoursesController < ApplicationController
   before_filter :instructors_and_tas_only!
   before_filter :instructors_only!, except: [:index, :show]
 
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :add_ta, :remove_ta]
+  before_action :set_course, except: [:new, :index, :create]
+
+  def create_section
+
+    new_section = @course.sections.build(section_params)
+
+    if new_section.save
+      flash[:notice] = "Successfully added section #{new_section.name}"
+    else
+      flash[:error] = new_section.errors.first
+    end
+    redirect_to @course
+  end
+
+  def delete_section
+    if @course.sections.destroy(params[:section_id])
+      flash[:notice] = 'Successfully deleted section.'
+    else
+      flash[:error] = 'Failed to delete section.'
+    end
+    redirect_to @course
+  end
 
   def add_ta
 
@@ -62,6 +83,7 @@ class CoursesController < ApplicationController
   def show
     @assignments = @course.assignments
     @tas = @course.tas
+    @sections = @course.sections
   end
 
   # GET /courses/new
@@ -123,6 +145,10 @@ class CoursesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def course_params
       params.require(:course).permit(:name)
+    end
+
+    def section_params
+      params.require(:section).permit(:name)
     end
 
 end
