@@ -2,8 +2,16 @@
   <%= f.error_notification %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :due_date %>
+    <div class="row">
+      <div class="col-md-4">
+        <%= f.input :name %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-4">
+        <%= f.input :due_date %>
+      </div>
+    </div>
   </div>
 
   <div class="form-actions">
