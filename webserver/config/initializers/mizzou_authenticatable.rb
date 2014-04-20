@@ -15,8 +15,8 @@ require 'devise/strategies/authenticatable'
           username = params[:user][:pawprint]
           password = params[:user][:password]
 
-          # Don't authenticate for development
-          if Rails.env.development?
+          # Don't authenticate for development or staging
+          if Rails.env.development? || Rails.env.staging?
             user = User.where(pawprint: username).first ||
                 Student.create(pawprint: username, email: "#{username}@mail.missouri.edu")
             success!(user)
