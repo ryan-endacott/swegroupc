@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
 
   before_filter :instructors_and_tas_only!
-  before_filter :instructors_only!, except: [:index, :show]
+  before_filter :instructors_only!, except: [:index, :show, :create_section, :delete_section]
 
   before_action :set_course, except: [:new, :index, :create]
 
