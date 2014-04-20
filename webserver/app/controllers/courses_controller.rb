@@ -42,9 +42,9 @@ class CoursesController < ApplicationController
     @ta = Student.find_by(pawprint: params[:pawprint]) || Ta.where(pawprint: params[:pawprint]).first_or_create
 
     if @ta.class == Student # Convert to TA if it was student
-      @ta = @ta.becomes(Ta)
       @ta.type = 'Ta'
       @ta.save!
+      @ta = @ta.becomes(Ta)
     end
 
     if @course.tas << @ta
