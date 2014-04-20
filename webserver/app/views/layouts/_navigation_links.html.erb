@@ -13,7 +13,6 @@
   <% end %>
   <% if current_user.ta? %>
           <li><%= link_to 'Partition', 'TODO' %></li>
-          <li><%= link_to 'Submissions', submissions_path %></li>
   <% end %>
   <% if current_user.student? %>
           <li><%= link_to 'Submissions', submissions_path %></li>
