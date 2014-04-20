@@ -1,5 +1,6 @@
 class Submission < ActiveRecord::Base
   belongs_to :user
+  belongs_to :assignment
 
   validate :file_size_under_five_mb
 
