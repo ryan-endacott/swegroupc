@@ -2,14 +2,45 @@ class CoursesController < ApplicationController
 
   before_filter :instructors_only!
 
-  before_action :set_course, only: [:show, :edit, :update, :destroy, :add_ta]
+  before_action :set_course, only: [:show, :edit, :update, :destroy, :add_ta, :remove_ta]
 
   def add_ta
-    @ta = Ta.new()
+
+    # Error checks
+
+    if params[:pawprint].blank? # must supply non-empty TA pawprint
+      flash[:error] = 'Pawprint cannot be blank.'
+    elsif @course.tas.where(pawprint: params[:pawprint]).count > 0 # check if TA already exists
+      flash[:error] = "TA #{params[:pawprint]} already exists for this course."
+    elsif Instructor.where(pawprint: params[:pawprint]).count > 0 # Instructor can't be a TA
+      flash[:error] = 'An instructor cannot be a TA.'
+    end
+    redirect_to @course and return if flash[:error]
+
+    @ta = Student.find_by(pawprint: params[:pawprint]) || Ta.where(pawprint: params[:pawprint]).first_or_create
+
+    if @ta.class == Student # Convert to TA if it was student
+      @ta = @ta.becomes(Ta)
+      @ta.type = 'Ta'
+      @ta.save!
+    end
+
+    if @course.tas << @ta
+      flash[:notice] = "TA #{params[:pawprint]} successfully added!"
+    else
+      flash[:error] = "Failed to add TA #{params[:pawprint]}."
+    end
+    redirect_to @course
   end
 
   def remove_ta
-    #TODO
+    @ta = @course.tas.find(params[:ta_id])
+
+    if @ta
+      @course.tas.delete(@ta)
+      flash[:notice] = "Successfully deleted TA #{@ta.pawprint}."
+    end
+    redirect_to @course
   end
 
   # GET /courses
@@ -86,7 +117,4 @@ class CoursesController < ApplicationController
       params.require(:course).permit(:name)
     end
 
-    def ta_params
-      params.require(:ta).permit(:pawprint)
-    end
 end
