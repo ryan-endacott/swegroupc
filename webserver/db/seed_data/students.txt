@@ -1,0 +1,10 @@
+# This file is a list of student pawprints
+# to prepopulate the database with when
+# `rake db:seed` is run
+dahr47
+rzeg24
+hcfxd
+cjvqm9
+bx3g3
+aowhd4
+stu

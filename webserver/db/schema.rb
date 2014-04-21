@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 20140420204815) do
   add_index "ta_courses", ["ta_id", "course_id"], name: "index_ta_courses_on_ta_id_and_course_id", unique: true
 
   create_table "users", force: true do |t|
-    t.string   "email",               default: ""
+    t.string   "email",               default: "", null: false
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",       default: 0,  null: false
     t.datetime "current_sign_in_at"

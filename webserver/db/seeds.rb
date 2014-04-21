@@ -17,3 +17,18 @@ end
 
 puts 'Done populating professor list'
 
+puts 'Populating student list...'
+
+# Populates the student list from seed_data/students.txt
+File.readlines("#{Rails.root}/db/seed_data/students.txt").each do |line|
+
+    line.strip! # Trim the whitespace.
+
+    next if line.chars.first == '#' # Skip comment lines.
+
+    # Otherwise, add the student to the database if they're not already present.
+    Student.where(pawprint: line, email: "#{line}@missour.edu").first_or_create
+
+end
+
+puts 'Done populating student list'
