@@ -1,0 +1,10 @@
+PAWPRINT: aowhd4
+TIME: Sun Apr 13 12:47:49 2014
+
+IP ADDRESS: 
+          inet addr:128.206.9.212  Bcast:128.206.9.255  Mask:255.255.255.0
+          inet6 addr: fe80::250:56ff:fead:3361/64 Scope:Link
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+FILES: 
+	asdf.txt : 0 bytes
