@@ -9,4 +9,4 @@ all: submission.o lib/lcfg.o config.o
 	$(CC) -o submit main.c submission.o lib/lcfg.o config.o $(CFLAGS)
 
 clean:
-	rm submit submission.o lib/lcfg.o
+	rm submit *.o lib/lcfg.o
