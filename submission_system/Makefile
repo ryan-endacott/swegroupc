@@ -8,3 +8,5 @@ CFLAGS=-lcurl
 all: submission.o
 	$(CC) -o submit main.c submission.o $(CFLAGS)
 
+clean:
+	rm submit submission.o
