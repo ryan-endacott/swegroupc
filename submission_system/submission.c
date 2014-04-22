@@ -41,3 +41,36 @@ void manager_destroy(submission_manager_t *manager)
     free(manager);
 }
 
+/**
+ * Submits a file denoted by a given path.
+ *
+ * Returns SUBMIT_SUCCESS if the operation was successful.
+ * Otherwise, returns SUBMIT_FAILURE.
+ */
+int submit(submission_manager_t *manager, const char *file_path)
+{
+    return SUBMIT_FAILURE;
+}
+
+/**
+ * Submits many files denoted by an array of paths.
+ *
+ * Returns SUBMIT_SUCCESS if the operation was successful.
+ * Otherwise, returns SUBMIT_FAILURE.
+ */
+int submit_many(submission_manager_t *manager, const char *file_paths[])
+{
+    return SUBMIT_FAILURE;
+}
+
+/**
+ * Submits an entire folder denoted by a given path.
+ *
+ * Returns SUBMIT_SUCCESS if the operation was successful.
+ * Otherwise, returns SUBMIT_FAILURE.
+ */
+int submit_folder(submission_manager_t *manager, const char *folder_path)
+{
+    return SUBMIT_FAILURE;
+}
+
