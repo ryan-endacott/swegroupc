@@ -9,6 +9,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <curl/curl.h>
 #include "submission.h"
 
 /**
@@ -49,7 +50,33 @@ void manager_destroy(submission_manager_t *manager)
  */
 int submit(submission_manager_t *manager, const char *file_path)
 {
-    return SUBMIT_FAILURE;
+    // Initialize the curl transfer manager and open a file descriptor.
+    CURL *curl = curl_easy_init();
+    FILE *fd = fopen(file_path, "r");
+
+    // Verify that the file was opened.
+    if (fd == NULL)
+    {
+        curl_easy_cleanup(curl);
+        return SUBMIT_FAILURE;
+    }
+
+    // Prepare curl for upload.
+    curl_easy_setopt(curl, CURLOPT_URL, manager->endpoint);
+    curl_easy_setopt(curl, CURLOPT_UPLOAD, 1);
+    curl_easy_setopt(curl, CURLOPT_READDATA, fd);
+    
+    // Perform the upload.
+    CURLcode code = curl_easy_perform(curl);
+
+    // Cleanup since we're done with curl.
+    curl_easy_cleanup(curl);
+
+    // Verify the submission's success.
+    if (code != CURLE_OK) return SUBMIT_FAILURE;
+    
+    // Return with a success.
+    return SUBMIT_SUCCESS;
 }
 
 /**

@@ -15,8 +15,6 @@
 
 int main(int argc, const char *argv[])
 {
-    submit(argv[0]);
-
     exit(EXIT_SUCCESS);
 }
 

@@ -24,7 +24,7 @@ submission_manager_t *manager_init(const char *endpoint);
 /**
  * Destroys the manager and any associated resources.
  */
-void manager_destroy(const submission_manager_t *manager);
+void manager_destroy(submission_manager_t *manager);
 
 /**
  * Submits a file denoted by a given path.
