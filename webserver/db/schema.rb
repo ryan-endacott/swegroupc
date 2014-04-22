@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140420204815) do
+ActiveRecord::Schema.define(version: 20140422221827) do
 
   create_table "assignments", force: true do |t|
     t.string   "name"
@@ -48,13 +48,21 @@ ActiveRecord::Schema.define(version: 20140420204815) do
 
   add_index "sections", ["course_id"], name: "index_sections_on_course_id"
 
+  create_table "submission_files", force: true do |t|
+    t.string   "filename"
+    t.string   "content_type"
+    t.binary   "file_contents"
+    t.integer  "submission_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "submission_files", ["submission_id"], name: "index_submission_files_on_submission_id"
+
   create_table "submissions", force: true do |t|
     t.text     "receipt"
     t.integer  "user_id"
     t.text     "ip_address"
-    t.text     "filename"
-    t.text     "content_type"
-    t.binary   "file_contents"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "assignment_id"
@@ -71,7 +79,7 @@ ActiveRecord::Schema.define(version: 20140420204815) do
   add_index "ta_courses", ["ta_id", "course_id"], name: "index_ta_courses_on_ta_id_and_course_id", unique: true
 
   create_table "users", force: true do |t|
-    t.string   "email",               default: "", null: false
+    t.string   "email",               default: ""
     t.datetime "remember_created_at"
     t.integer  "sign_in_count",       default: 0,  null: false
     t.datetime "current_sign_in_at"
