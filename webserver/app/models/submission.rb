@@ -1,39 +1,53 @@
 class Submission < ActiveRecord::Base
   belongs_to :user
   belongs_to :assignment
+  has_many :submission_files
 
-  validate :file_size_under_five_mb
+  after_save :save_files
 
-  validates :ip_address, :receipt, :filename,
-    :content_type, :file_contents, presence: true
+  validate :files_size_under_five_mb
+
+  validates :ip_address, presence: true
 
   def initialize(params = {})
-    @file = params.delete(:file)
+    @files = params.delete(:file)
     super
-    save_file
   end
 
   private
 
-    def file_size_under_five_mb
-      # 1048576 is the number of bytes in a megabyte
-      if (@file.size.to_f / 1048576) > 5
-        errors.add(:file, 'File size cannot be over 5 MB')
-      end
-    end
-
-    def save_file
+    def save_files
       # Only save if there is a file to save
-      if @file
-        self.filename = sanitize_filename(@file.original_filename)
-        self.content_type = @file.content_type
-        self.file_contents = @file.read
-        self.receipt = Digest::MD5.hexdigest(self.file_contents)
+
+      appended_file_contents = '' # For receipt token
+      if @files && @files.count > 0
+        @files.each do |file|
+          f = SubmissionFile.new
+          f.filename = sanitize_filename(file.original_filename)
+          f.content_type = file.content_type
+          f.file_contents = file.read
+          appended_file_contents << f.file_contents
+          f.submission_id = self.id
+          f.save!
+        end
       end
+      receipt = Digest::MD5.hexdigest(appended_file_contents)
+      self.update_columns(receipt: receipt)
     end
 
     def sanitize_filename(filename)
       # Just get filename in case of IE
       File.basename(filename)
     end
+
+
+    def files_size_under_five_mb
+      @files.each do |file|
+        # 1048576 is the number of bytes in a megabyte
+        if (file.size.to_f / 1048576) > 5
+          errors.add(:file, 'File size cannot be over 5 MB')
+        end
+      end
+    end
+
 end
