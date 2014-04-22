@@ -20,11 +20,12 @@ int main()
 {
     int err;
     config_t *config = config_init(CONFIG_PATH, &err); 
+    submission_manager_t *manager = manager_init(config->endpoint);
 
     if (err == CONFIG_FAILURE)
         printf("An error occured while opening the config.\n");
 
-    printf("%s\n", config->endpoint);
+    submit(manager, "config.conf");
 
     config_destroy(config);
     exit(EXIT_SUCCESS);
