@@ -32,4 +32,12 @@ submission_manager_t *manager_init(const char *endpoint)
     return manager;
 }
 
+/**
+ * Destroys the manager and any associated resources.
+ */
+void manager_destroy(submission_manager_t *manager)
+{
+    free(manager->endpoint);
+    free(manager);
+}
 
