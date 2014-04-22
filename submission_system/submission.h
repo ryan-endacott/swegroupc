@@ -12,13 +12,27 @@
 #define SUBMIT_SUCCESS 1
 #define SUBMIT_FAILURE 0
 
+typedef struct submission_manager {
+    char *endpoint;
+} submission_manager_t;
+
+/**
+ * Initializes the manager with a given endpoint.
+ */
+submission_manager_t *manager_init(const char *endpoint);
+
+/**
+ * Destroys the manager and any associated resources.
+ */
+void manager_destroy(const submission_manager_t *manager);
+
 /**
  * Submits a file denoted by a given path.
  *
  * Returns SUBMIT_SUCCESS if the operation was successful.
  * Otherwise, returns SUBMIT_FAILURE.
  */
-int submit(const char *file_path);
+int submit(submission_manager_t *manager, const char *file_path);
 
 /**
  * Submits many files denoted by an array of paths.
@@ -26,7 +40,7 @@ int submit(const char *file_path);
  * Returns SUBMIT_SUCCESS if the operation was successful.
  * Otherwise, returns SUBMIT_FAILURE.
  */
-int submit_many(const char *file_paths[]);
+int submit_many(submission_manager_t *manager, const char *file_paths[]);
 
 /**
  * Submits an entire folder denoted by a given path.
@@ -34,6 +48,6 @@ int submit_many(const char *file_paths[]);
  * Returns SUBMIT_SUCCESS if the operation was successful.
  * Otherwise, returns SUBMIT_FAILURE.
  */
-int submit_folder(const char *folder_path);
+int submit_folder(submission_manager_t *manager, const char *folder_path);
 
 #endif
