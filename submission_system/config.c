@@ -43,15 +43,6 @@ config_t *config_init(const char *config_path, int *status)
         return NULL;
     }
 
-    size_t i;
-    char *string = (char *)*output;
-    for (i = 0; i < len; i++)
-    {
-        printf("%c", string[i]);
-    }
-
-    printf("\n");
-
     // Must've been successful, so return the config.
     return config;
 }
