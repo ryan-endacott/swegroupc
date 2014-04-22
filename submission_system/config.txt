@@ -1,2 +1,0 @@
-0.0.0.0:3000 //still waiting on web service to see what the url is
-will add other editable config options as we need them
