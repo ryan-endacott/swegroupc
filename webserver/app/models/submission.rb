@@ -1,6 +1,7 @@
 class Submission < ActiveRecord::Base
   belongs_to :user
   belongs_to :assignment
+  belongs_to :section
   has_many :submission_files
 
   after_save :save_files
