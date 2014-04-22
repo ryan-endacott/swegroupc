@@ -9,6 +9,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <curl/curl.h>
 #include "submission.h"
 
 /**
@@ -41,6 +42,8 @@ void manager_destroy(submission_manager_t *manager)
     free(manager);
 }
 
+/* TODO: USE HTTPS */
+
 /**
  * Submits a file denoted by a given path.
  *
@@ -49,7 +52,35 @@ void manager_destroy(submission_manager_t *manager)
  */
 int submit(submission_manager_t *manager, const char *file_path)
 {
-    return SUBMIT_FAILURE;
+    // Prepare curl for a multipart http post.
+    CURL *curl = curl_easy_init();
+    struct curl_httppost *post = NULL;
+    struct curl_httppost *last = NULL;
+    
+    // Add the fields.
+    curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[file]",
+            CURLFORM_FILE, file_path,
+            CURLFORM_END);
+
+    // Define where it's going.
+    curl_easy_setopt(curl, CURLOPT_URL, manager->endpoint);
+    curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
+
+    // Perform and handle the return value.
+    CURLcode res = curl_easy_perform(curl);
+    int return_val;
+
+    if (res != CURLE_OK)
+        return_val = SUBMIT_FAILURE;
+    else
+        return_val = SUBMIT_SUCCESS;
+    
+    // Cleanup curl.
+    curl_easy_cleanup(curl);
+    
+    // Return the return value.
+    return return_val;
 }
 
 /**
