@@ -5,8 +5,8 @@ CFLAGS=-lcurl
 %.o: %.c $(DEPS)
 	$(CC) -c -o $@ $<
 
-all: submission.o lib/lcfg.o
-	$(CC) -o submit main.c submission.o lib/lcfg.o $(CFLAGS)
+all: submission.o lib/lcfg.o config.o
+	$(CC) -o submit main.c submission.o lib/lcfg.o config.o $(CFLAGS)
 
 clean:
 	rm submit submission.o lib/lcfg.o
