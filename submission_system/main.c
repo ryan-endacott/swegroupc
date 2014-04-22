@@ -12,12 +12,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "submission.h"
+#include "config.h"
 
-int main(int argc, const char *argv[])
+#define CONFIG_PATH "config.conf"
+
+int main()
 {
-    submit(argv[0]);
+    int err;
+    config_t *config = config_init(CONFIG_PATH, &err); 
+    submission_manager_t *manager = manager_init(config->endpoint);
 
+    if (err == CONFIG_FAILURE)
+        printf("An error occured while opening the config.\n");
+
+    submit(manager, "config.conf");
+
+    config_destroy(config);
     exit(EXIT_SUCCESS);
 }
-
 
