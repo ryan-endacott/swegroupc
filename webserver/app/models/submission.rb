@@ -39,6 +39,12 @@ class Submission < ActiveRecord::Base
   # For simple form
   attr_accessor :assignment_name, :section_name, :course_name
 
+  # Gets submission attempt number
+  def attempt_number
+    other_submissions = Submission.where(user: self.user, assignment: self.assignment).order(:created_at)
+    other_submissions.map(&:id).index(self.id) + 1
+  end
+
   private
 
     def saved_assignment_and_section
