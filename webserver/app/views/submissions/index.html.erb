@@ -6,6 +6,7 @@
       <tr>
         <th>Course</th>
         <th>Assignment</th>
+        <th>Submit Time</th>
         <th>Number of Files</th>
         <th>Receipt Token</th>
         <th>Download</th>
@@ -17,6 +18,7 @@
         <tr>
           <td><%= submission.course.name %></td>
           <td><%= submission.assignment.name %></td>
+          <td><%= submission.created_at.to_s(:pretty) %></td>
           <td><%= submission.submission_files.count %></td>
           <td><%= submission.receipt %></td>
           <td><%= link_to 'Download', download_submission_path(submission), class: 'btn btn-primary' %></td>
