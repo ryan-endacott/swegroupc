@@ -1,9 +1,47 @@
 class AssignmentsController < ApplicationController
-  before_action :set_assignment, only: [:show, :edit, :update, :destroy]
+  before_action :set_assignment, only: [:show, :edit, :update, :destroy, :collect]
   before_action :set_course
 
   def collect # collect submissions
-    render json: {hi: 'lol'}
+
+    # Folder hierarchy is:
+    # course > section > assignment label > student pawprint > files
+    base_folder = @course.name + '/'
+    base_folder << "<SECTIONREPLACEME>/"
+    base_folder << @assignment.name + '/'
+
+    filename = @assignment.name + '_submissions_' + Time.zone.now.to_s
+
+    zip_file = Tempfile.new(filename)
+    begin
+      # Initialize temp file as zip
+      # Add files to the zip
+      Zip::OutputStream.open(zip_file) do |zos|
+        @assignment.submissions.each do |submission|
+          submission.submission_files.each do |file|
+
+            # Build current folder
+            current_folder = base_folder.gsub('<SECTIONREPLACEME>', submission.section.name)
+            current_folder << submission.user.pawprint + '/'
+
+            zos.put_next_entry(current_folder + file.filename)
+            zos.print(file.file_contents)
+          end
+        end
+      end
+
+      zip_data = File.read(zip_file.path)
+
+      # Send data to the browser
+      send_data(zip_data, type: 'application/zip', filename: filename)
+    ensure
+      # close and delete tempfile
+      zip_file.close
+      zip_file.unlink
+    end
+
+
+
   end
 
   # GET /assignments
