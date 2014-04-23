@@ -14,6 +14,7 @@ class Submission < ActiveRecord::Base
   def initialize(params = {})
     if params.length > 0
       @files = params.delete(:file) || []
+      @course_name = params.delete(:course_name)
       @assignment_name = params.delete(:assignment_name)
       @section_name = params.delete(:section_name)
     end
@@ -35,26 +36,33 @@ class Submission < ActiveRecord::Base
   alias_method :section, :section_with_default
 
   # For simple form
-  attr_accessor :assignment_name, :section_name
+  attr_accessor :assignment_name, :section_name, :course_name
 
   private
 
     def saved_assignment_and_section
 
-      # save and associate assignment and section
-      a = Assignment.where(name: @assignment_name).first
-      if a.nil?
-        errors.add('assignment_name', 'Could not find assignment with that name.')
-      else
-        self.assignment = a
-        course = self.assignment.course
-        s = course.sections.where(name: @section_name).first
-        if s.nil?
-          errors.add(:section_name, 'Could not find section with that name.')
-        else
-          self.section = s
-        end
+      c = Course.where(name: @course_name).first
+
+      if c.nil?
+        errors.add(:course_name, 'Could not find course with that name')
+        return
       end
+
+      # save and associate assignment and section
+      a = c.assignments.where(name: @assignment_name).first
+      if a.nil?
+        errors.add(:assignment_name, 'Could not find assignment with that name.')
+        return
+      end
+      self.assignment = a
+
+      s = c.sections.where(name: @section_name).first
+      if s.nil?
+        errors.add(:section_name, 'Could not find section with that name.')
+        return
+      end
+      self.section = s
 
     end
 
