@@ -17,7 +17,8 @@ class SubmissionsController < ApplicationController
     filename << @submission.course.name + '_'
     filename << @submission.assignment.name + '_'
     other_submissions = Submission.where(user: current_user, assignment: @submission.assignment).order(:created_at)
-    filename << other_submissions.map(&:id).index(@submission.id) + 1
+    filename << "attempt"
+    filename << (other_submissions.map(&:id).index(@submission.id) + 1).to_s
     filename << '.zip'
 
     zip_file = Tempfile.new(filename)
