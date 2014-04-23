@@ -1,5 +1,5 @@
 class Submission < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :student
   belongs_to :assignment
   belongs_to :section
   has_many :submission_files
@@ -8,12 +8,26 @@ class Submission < ActiveRecord::Base
 
   validate :files_size_under_five_mb
 
-  validates :ip_address, presence: true
+  validates :ip_address, :student, :assignment, presence: true
 
   def initialize(params = {})
     @files = params.delete(:file)
     super
   end
+
+  # Get a null section by default if no section associated
+  def section_with_default
+    s = regular_section
+    if s.nil?
+      s = Section.new(name: 'NULL')
+    end
+    return s
+  end
+
+  # Get a null section by default if no section associated
+  alias_method :regular_section, :section
+  alias_method :section, :section_with_default
+
 
   private
 
