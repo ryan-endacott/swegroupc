@@ -46,7 +46,7 @@ class SubmissionsController < ApplicationController
   # GET /submissions
   # GET /submissions.json
   def index
-    @submissions = current_user.submissions
+    @submissions = current_user.submissions.order(created_at: :desc)
   end
 
   # GET /submissions/new
