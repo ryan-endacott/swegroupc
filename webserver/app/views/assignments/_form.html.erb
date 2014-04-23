@@ -11,7 +11,7 @@
       <div class="col-md-4">
         <%= f.input :due_date, as: :string do %>
           <div class="input-group date" id="datetimepicker1">
-            <%= f.input_field :due_date, as: :string %>
+            <%= f.input_field :due_date, as: :string, value: localize(f.object.due_date, format: '%m/%d/%Y %H:%M') %>
             <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
           </div>
         <% end %>
