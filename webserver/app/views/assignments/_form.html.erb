@@ -9,7 +9,12 @@
     </div>
     <div class="row">
       <div class="col-md-4">
-        <%= f.input :due_date %>
+        <%= f.input :due_date, as: :string do %>
+          <div class="input-group date" id="datetimepicker1">
+            <%= f.input_field :due_date, as: :string %>
+            <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>
@@ -19,3 +24,13 @@
   </div>
   <br>
 <% end %>
+
+
+<script>
+  var ready = function() {
+    $('#datetimepicker1').datetimepicker();
+  };
+
+  $(document).ready(ready);
+  $(document).on('page:load', ready);
+</script>

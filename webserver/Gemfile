@@ -13,6 +13,8 @@ gem 'figaro'
 gem 'simple_form'
 gem 'httparty'
 gem 'rubyzip', '>= 1.0.0' # will load new rubyzip version
+gem 'momentjs-rails', '~> 2.5.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 3.0.0'
 group :development do
   gem 'better_errors'
   gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :mri_21, :rbx]
