@@ -7,7 +7,8 @@
     <li><%= nav_link 'Courses', courses_path %></li>
   <% end %>
   <% if current_user.student? %>
-    <li><%= nav_link 'Submissions', submissions_path %></li>
+    <li><%= nav_link 'Submit an Assignment', new_submission_path %></li>
+    <li><%= nav_link 'Your Previous Submissions', submissions_path %></li>
   <% end %>
 <% end %>
 
