@@ -1,6 +1,9 @@
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:show, :edit, :update, :destroy]
 
+  # Students only for web UI
+  before_filter :students_only!, except: [:create]
+
   # No CSRF on submission for the command line system
   skip_before_filter :verify_authenticity_token, :only => [:create]
 
@@ -28,8 +31,21 @@ class SubmissionsController < ApplicationController
   # POST /submissions
   # POST /submissions.json
   def create
+
     @submission = Submission.new(submission_params)
+
+    # TODO: Authenticate here
+
+    # If no auth supplied and they are posting via API
+    if params[:pawprint].blank? and current_user.nil?
+      render json: { error: 'No pawprint supplied.' } and return
+    end
+
+    user = current_user || Student.where(pawprint: params[:pawprint]).first_or_create
+
+    @submission.user = user
     @submission.ip_address = request.remote_ip
+
 
     respond_to do |format|
       if @submission.save
@@ -42,8 +58,7 @@ class SubmissionsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /submissions/1
-  # PATCH/PUT /submissions/1.json
+  # TODO delete
   def update
     respond_to do |format|
       if @submission.update(submission_params)
@@ -74,6 +89,6 @@ class SubmissionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def submission_params
-      params.require(:submission).permit(:file => [], :assignment, :course, :section)
+      params.require(:submission).permit(:assignment_name, :section_name, :file => [])
     end
 end

@@ -1,5 +1,5 @@
 class Submission < ActiveRecord::Base
-  belongs_to :student
+  belongs_to :user
   belongs_to :assignment
   belongs_to :section
   has_many :submission_files
@@ -7,13 +7,19 @@ class Submission < ActiveRecord::Base
   after_save :save_files
 
   validate :files_size_under_five_mb
+  validate :saved_assignment_and_section
 
-  validates :ip_address, :student, :assignment, presence: true
+  validates :ip_address, :user, presence: true
 
   def initialize(params = {})
-    @files = params.delete(:file)
+    if params.length > 0
+      @files = params.delete(:file) || []
+      @assignment_name = params.delete(:assignment_name)
+      @section_name = params.delete(:section_name)
+    end
     super
   end
+
 
   # Get a null section by default if no section associated
   def section_with_default
@@ -28,8 +34,29 @@ class Submission < ActiveRecord::Base
   alias_method :regular_section, :section
   alias_method :section, :section_with_default
 
+  # For simple form
+  attr_accessor :assignment_name, :section_name
 
   private
+
+    def saved_assignment_and_section
+
+      # save and associate assignment and section
+      a = Assignment.where(name: @assignment_name).first
+      if a.nil?
+        errors.add('assignment_name', 'Could not find assignment with that name.')
+      else
+        self.assignment = a
+        course = self.assignment.course
+        s = course.sections.where(name: @section_name).first
+        if s.nil?
+          errors.add(:section_name, 'Could not find section with that name.')
+        else
+          self.section = s
+        end
+      end
+
+    end
 
     def save_files
       # Only save if there is a file to save
