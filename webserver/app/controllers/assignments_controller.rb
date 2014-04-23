@@ -75,6 +75,11 @@ class AssignmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def assignment_params
-      params.require(:assignment).permit(:name, :due_date)
+      p = params.require(:assignment).permit(:name, :due_date)
+      if p[:due_date]
+        dd = Time.strptime(p[:due_date], '%m/%d/%Y %H:%M %p')
+      end
+      p[:due_date] = dd
+      return p
     end
 end
