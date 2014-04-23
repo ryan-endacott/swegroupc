@@ -40,7 +40,10 @@ int main(int argc, char** argv)
 	char* pawprint = getStuInfo();
 
 	//logs info about submission
-	FILE* logFile = initialLog(pawprint, fileSizes, numFiles, argv);
+	char* logFile = initialLog(pawprint, fileSizes, numFiles, argv);
+	
+	//compresses files into tarball
+	char* tarFileName = tarFiles(argv, numFiles, pawprint);
 		
 	//submission
     int err;

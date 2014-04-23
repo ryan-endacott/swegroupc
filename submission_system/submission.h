@@ -50,4 +50,6 @@ int submit_many(submission_manager_t *manager, const char *file_paths[]);
  */
 int submit_folder(submission_manager_t *manager, const char *folder_path);
 
+char* tarFiles(char** fileName, int count, char* pawprint);
+
 #endif

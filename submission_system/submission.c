@@ -105,3 +105,41 @@ int submit_folder(submission_manager_t *manager, const char *folder_path)
     return SUBMIT_FAILURE;
 }
 
+//compresses submitted files into tarball
+char* tarFiles(char** fileName, int count, char* pawprint) {
+	/*FILE* command;
+	char path[1035];	
+	command = popen("ifconfig | grep inet", "r");*/
+	
+	FILE* proc;
+	char command[1000000];
+	char files[1000000];
+	
+	//appends file names to command to execute
+	int i = 0;
+	strcpy(files, fileName[i+3]);
+	for (i = 1; i < count; i++) {
+		strcat(files, " ");
+		strcat(files,fileName[i+3]);		
+	}
+	
+	char outName[1000000];
+	strcpy(outName, pawprint);
+	strcat(outName, "_");
+	strcat(outName, fileName[1]);
+	strcat(outName, "_");
+	strcat(outName, fileName[2]);
+	strcat(outName, ".tar");
+	
+	int len;
+	len = snprintf(command, sizeof(command), "tar -cf %s %s", outName, files);
+	if (len <= sizeof(command)) {
+		proc = popen(command, "r");
+	} else {
+		printf("too long\n");
+		return NULL;
+	}
+	
+	return outName;
+}
+
