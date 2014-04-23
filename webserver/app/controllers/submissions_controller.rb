@@ -11,7 +11,7 @@ class SubmissionsController < ApplicationController
   # GET /submissions
   # GET /submissions.json
   def index
-    @submissions = Submission.all
+    @submissions = current_user.submissions
   end
 
   # GET /submissions/1
