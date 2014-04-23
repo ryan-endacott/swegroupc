@@ -5,7 +5,7 @@ class AssignmentsController < ApplicationController
   def collect # collect submissions
 
     # Folder hierarchy is:
-    # course > section > assignment label > student pawprint > files
+    # course > section > assignment label > student pawprint > attemptnum_LATE?_submittime > files
     base_folder = @course.name + '/'
     base_folder << "<SECTIONREPLACEME>/"
     base_folder << @assignment.name + '/'
@@ -23,6 +23,9 @@ class AssignmentsController < ApplicationController
             # Build current folder
             current_folder = base_folder.gsub('<SECTIONREPLACEME>', submission.section.name)
             current_folder << submission.user.pawprint + '/'
+            current_folder << 'attempt' + submission.attempt_number.to_s + '_'
+            current_folder << 'LATE_' if @assignment.due_date <  submission.created_at
+            current_folder << submission.created_at.to_s + '/'
 
             zos.put_next_entry(current_folder + file.filename)
             zos.print(file.file_contents)
