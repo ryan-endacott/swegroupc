@@ -5,4 +5,5 @@ class Section < ActiveRecord::Base
 
   # Courses may not have multiple sections with the same name
   validates :name, uniqueness: { scope: :course_id }
+
 end
