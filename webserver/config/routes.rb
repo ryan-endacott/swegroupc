@@ -1,7 +1,11 @@
 Webserver::Application.routes.draw do
   root :to => "home#index"
   devise_for :users, :controllers => {:registrations => "registrations"}
-  resources :submissions, except: [:show, :edit, :update, :destroy]
+  resources :submissions, except: [:show, :edit, :update, :destroy] do
+    member do
+      get 'download'
+    end
+  end
 
   resources :courses do
     member do

@@ -19,7 +19,7 @@
           <td><%= submission.assignment.name %></td>
           <td><%= submission.submission_files.count %></td>
           <td><%= submission.receipt %></td>
-          <td><%= link_to 'Download', download_submission_path(submission) %></td>
+          <td><%= link_to 'Download', download_submission_path(submission), class: 'btn btn-primary' %></td>
         </tr>
       <% end %>
     </tbody>
