@@ -8,9 +8,11 @@
     <%= f.input :file, as: :file, label: 'File to submit:', input_html: {multiple: true} %>
   </div>
 
-  <br>
+  <p class="help-block">
+    Submit your assignment here!
+  </p>
 
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, class: 'btn btn-success' %>
   </div>
 <% end %>
