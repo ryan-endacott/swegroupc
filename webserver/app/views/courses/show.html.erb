@@ -7,10 +7,11 @@
   <table class="table table-bordered">
     <thead>
       <tr>
-        <th>Assignment Name</th>
-        <th>Due Date</th>
-        <th>Edit</th>
-        <th>Delete</th>
+        <th class="col-md-5">Assignment Name</th>
+        <th class="col-md-3">Due Date</th>
+        <th class="col-md-1">Edit</th>
+        <th class="col-md-1">Delete</th>
+        <th class="col-md-4">Collect Assignments</th>
       </tr>
     </thead>
 
@@ -19,8 +20,9 @@
         <tr>
           <td><%= link_to assignment.name, course_assignment_path(@course, assignment) %></td>
           <td><%= assignment.pretty_due_date %></td>
-          <td><%= link_to 'Edit', edit_course_assignment_path(@course, assignment), class: 'btn btn-success' %></td>
-          <td><%= link_to 'Delete', course_assignment_path(@course, assignment), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure? This will delete ALL associated submissions.' } %></td>
+          <td><%= link_to 'Edit', edit_course_assignment_path(@course, assignment), class: 'btn btn-success btn-block' %></td>
+          <td><%= link_to 'Delete', course_assignment_path(@course, assignment), method: :delete, class: 'btn btn-danger btn-block', data: { confirm: 'Are you sure? This will delete ALL associated submissions.' } %></td>
+          <td><%= link_to 'Collect', edit_course_assignment_path(@course, assignment), class: 'btn btn-info btn-block' %></td>
         </tr>
       <% end %>
     </tbody>
