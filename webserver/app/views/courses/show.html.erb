@@ -22,7 +22,7 @@
           <td><%= assignment.pretty_due_date %></td>
           <td><%= link_to 'Edit', edit_course_assignment_path(@course, assignment), class: 'btn btn-success btn-block' %></td>
           <td><%= link_to 'Delete', course_assignment_path(@course, assignment), method: :delete, class: 'btn btn-danger btn-block', data: { confirm: 'Are you sure? This will delete ALL associated submissions.' } %></td>
-          <td><%= link_to 'Collect', edit_course_assignment_path(@course, assignment), class: 'btn btn-info btn-block' %></td>
+          <td><%= link_to 'Collect', collect_course_assignment_path(@course, assignment), class: 'btn btn-info btn-block' %></td>
         </tr>
       <% end %>
     </tbody>

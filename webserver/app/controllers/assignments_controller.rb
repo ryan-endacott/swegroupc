@@ -2,6 +2,10 @@ class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy]
   before_action :set_course
 
+  def collect # collect submissions
+    render json: {hi: 'lol'}
+  end
+
   # GET /assignments
   # GET /assignments.json
   def index

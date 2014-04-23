@@ -14,6 +14,10 @@ Webserver::Application.routes.draw do
       post 'add_ta'
       delete 'remove_ta/:ta_id', to: 'courses#remove_ta', as: 'remove_ta'
     end
-    resources :assignments, except: [:index]
+    resources :assignments, except: [:index] do
+      member do
+        get 'collect'
+      end
+    end
   end
 end
