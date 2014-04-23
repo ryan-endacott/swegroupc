@@ -14,11 +14,6 @@ class SubmissionsController < ApplicationController
     @submissions = current_user.submissions
   end
 
-  # GET /submissions/1
-  # GET /submissions/1.json
-  def show
-  end
-
   # GET /submissions/new
   def new
     @submission = Submission.new
