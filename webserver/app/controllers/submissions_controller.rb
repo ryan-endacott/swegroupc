@@ -1,4 +1,5 @@
 require 'zip'
+require 'mizzou_ldap'
 
 class SubmissionsController < ApplicationController
   before_action :set_submission, only: [:download]
@@ -85,10 +86,10 @@ class SubmissionsController < ApplicationController
     respond_to do |format|
       if @submission.save
         format.html { redirect_to submissions_path, notice: 'Submission was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @submission }
+        format.json { render action: 'show', status: :created, location: submissions_path }
       else
         format.html { render action: 'new' }
-        format.json { render json: @submission.errors, status: :unprocessable_entity }
+        format.json { render json: { error: @submission.errors.values.join("\n") }, status: :unprocessable_entity }
       end
     end
   end
