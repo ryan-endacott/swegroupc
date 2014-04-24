@@ -1,3 +1,5 @@
+require 'zip'
+
 class AssignmentsController < ApplicationController
   before_action :set_assignment, only: [:show, :edit, :update, :destroy, :collect]
   before_action :set_course
