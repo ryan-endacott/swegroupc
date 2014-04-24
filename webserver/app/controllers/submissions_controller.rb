@@ -60,14 +60,23 @@ class SubmissionsController < ApplicationController
 
     @submission = Submission.new(submission_params)
 
-    # TODO: Authenticate here
-
     # If no auth supplied and they are posting via API
-    if params[:pawprint].blank? and current_user.nil?
+    if params[:pawprint].blank? && current_user.nil?
       render json: { error: 'No pawprint supplied.' } and return
     end
 
-    user = current_user || Student.where(pawprint: params[:pawprint]).first_or_create
+
+    # Can't submit as professor
+    if Instructor.where(pawprint: params[:pawprint]).count > 0
+      render json: { error: 'That user is a professor and cannot submit assignments.'} and return
+    end
+
+    user = current_user || MizzouLdap.authenticate(params[:pawprint], params[:password])
+
+    if user.nil?
+      render json: { error: 'Failed to authenticate.  Incorrect pawprint and password.' }
+    end
+
 
     @submission.user = user
     @submission.ip_address = request.remote_ip
