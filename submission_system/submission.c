@@ -113,9 +113,10 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
 size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata) {
 	
 	cJSON *root = cJSON_Parse(ptr);
-	char* out = cJSON_Print(root);
-	cJSON_Delete(root);
-	printf("%s\n", out);
+	
+	//gets the first element
+	char *childElem = cJSON_GetArrayItem(root, 0);
+	
 }
 
 /**
