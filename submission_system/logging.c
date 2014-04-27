@@ -64,7 +64,7 @@ void finalLog(char* fileName) {
 	char message[256];
 	fscanf(temp, "%s", message);
 	fclose(temp);
-	remove(temp);
+	remove("___temp.txt");
 	
 	FILE* log = fopen(fileName, "a");
 	fprintf(log, "\t%s\n", message);
