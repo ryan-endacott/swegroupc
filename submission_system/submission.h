@@ -42,14 +42,6 @@ int submit(submission_manager_t *manager, const char *file_path);
  */
 int submit_many(submission_manager_t *manager, const char *file_paths[]);
 
-/**
- * Submits an entire folder denoted by a given path.
- *
- * Returns SUBMIT_SUCCESS if the operation was successful.
- * Otherwise, returns SUBMIT_FAILURE.
- */
-int submit_folder(submission_manager_t *manager, const char *folder_path);
-
 char* tarFiles(char** fileName, int count, char* pawprint);
 
 #endif

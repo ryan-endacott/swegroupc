@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <curl/curl.h>
 #include "submission.h"
+#include "lib/cJSON.h"
 
 /**
  * Initializes the manager with a given endpoint.
@@ -41,8 +42,6 @@ void manager_destroy(submission_manager_t *manager)
     free(manager->endpoint);
     free(manager);
 }
-
-/* TODO: USE HTTPS */
 
 /**
  * Submits a file denoted by a given path.
@@ -94,22 +93,8 @@ int submit_many(submission_manager_t *manager, const char *file_paths[])
     return SUBMIT_FAILURE;
 }
 
-/**
- * Submits an entire folder denoted by a given path.
- *
- * Returns SUBMIT_SUCCESS if the operation was successful.
- * Otherwise, returns SUBMIT_FAILURE.
- */
-int submit_folder(submission_manager_t *manager, const char *folder_path)
-{
-    return SUBMIT_FAILURE;
-}
-
 //compresses submitted files into tarball
 char* tarFiles(char** fileName, int count, char* pawprint) {
-	/*FILE* command;
-	char path[1035];	
-	command = popen("ifconfig | grep inet", "r");*/
 	
 	FILE* proc;
 	char command[1000000];
@@ -117,18 +102,21 @@ char* tarFiles(char** fileName, int count, char* pawprint) {
 	
 	//appends file names to command to execute
 	int i = 0;
-	strcpy(files, fileName[i+3]);
+	strcpy(files, fileName[i+4]);
 	for (i = 1; i < count; i++) {
 		strcat(files, " ");
-		strcat(files,fileName[i+3]);		
+		strcat(files,fileName[i+4]);		
 	}
 	
+	//TODO: use char* so it is dynamic
 	char outName[1000000];
 	strcpy(outName, pawprint);
 	strcat(outName, "_");
 	strcat(outName, fileName[1]);
 	strcat(outName, "_");
 	strcat(outName, fileName[2]);
+	strcat(outName, "_");
+	strcat(outName, fileName[3]);
 	strcat(outName, ".tar");
 	
 	int len;
@@ -139,6 +127,7 @@ char* tarFiles(char** fileName, int count, char* pawprint) {
 		printf("too long\n");
 		return NULL;
 	}
+	pclose(proc);
 	
 	return outName;
 }

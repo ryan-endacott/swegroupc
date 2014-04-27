@@ -48,7 +48,7 @@ char* initialLog(char* pawprint, int* sizes, int numFiles, char** fileNames) {
 	fprintf(log, "FILES: \n");
 	int i;
 	for (i = 0; i < numFiles; i++) {
-		fprintf(log, "\t%s : %d bytes\n", fileNames[i+3], sizes[i]);
+		fprintf(log, "\t%s : %d bytes\n", fileNames[i+4], sizes[i]);
 	}
 	
 	fclose(log);
