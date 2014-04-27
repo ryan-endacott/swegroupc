@@ -70,7 +70,7 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
             CURLFORM_COPYCONTENTS, sectionName,
             CURLFORM_END);
 	curl_formadd(&post, &last,
-            CURLFORM_COPYNAME, "submission[file]",
+            CURLFORM_COPYNAME, "submission[file][]",
             CURLFORM_FILE, file_path,
             CURLFORM_END);
 	curl_formadd(&post, &last,
