@@ -2,7 +2,6 @@
 #define LOGGING_H_
 
 char* getStuInfo();
-char* initialLog(char* pawprint, int* sizes, int numFiles, char** fileNames);
-void finalLog(char* fileName);
+void logSubmission(char* pawprint, int* sizes, int numFiles, char** fileNames);
 
 #endif

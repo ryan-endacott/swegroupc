@@ -11,9 +11,10 @@ char* getStuInfo() {
     return username;
 }
 
+//logs info about submission
 //input: pawprint, files array
-//output: log file with pawprint, ip, files and sizes, and time
-char* initialLog(char* pawprint, int* sizes, int numFiles, char** fileNames) {
+//output: log file with pawprint, ip, files and sizes, time, server response message
+void logSubmission(char* pawprint, int* sizes, int numFiles, char** fileNames) {
 	//gets current time in calendar and epoch format
 	time_t rawtime;
 	struct tm * timeinfo;
@@ -51,24 +52,13 @@ char* initialLog(char* pawprint, int* sizes, int numFiles, char** fileNames) {
 		fprintf(log, "\t%s : %d bytes\n", fileNames[i+4], sizes[i]);
 	}
 	
-	fclose(log);
-	
-	return logName;
-}
-
-//puts the error or receipt in the already created log file
-//input: log file name
-//output: finished log file
-void finalLog(char* fileName) {
+	//gets message from previously created temp file
 	FILE* temp = fopen("___temp.txt", "r");
 	char message[256];
 	fscanf(temp, "%s", message);
 	fclose(temp);
 	remove("___temp.txt");
-	
-	printf("%s\n", fileName);
-	
-	FILE* log = fopen(fileName, "a+");
 	fprintf(log, "\t%s\n", message);
-	fclose(log);
+	
+	fclose(log);	
 }

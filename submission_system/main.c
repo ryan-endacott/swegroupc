@@ -40,9 +40,6 @@ int main(int argc, char** argv)
 	
 	//gets student's pawprint
 	char* pawprint = getStuInfo();
-
-	//logs info about submission
-	char* logFile = initialLog(pawprint, fileSizes, numFiles, argv);
 	
 	//compresses files into tarball
 	char* tarFileName = tarFiles(argv, numFiles, pawprint);
@@ -59,6 +56,6 @@ int main(int argc, char** argv)
     config_destroy(config);
     
     //does final logging
-    finalLog(logFile);
+    logSubmission(pawprint, fileSizes, numFiles, argv);
 }
 
