@@ -116,7 +116,7 @@ size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata) {
 	
 	//gets the first element
 	cJSON *childElem = cJSON_GetArrayItem(root, 0);
-	if (childElem->string == "error") {
+	if (strcmp(childElem->string, "error") == 0) {
 		printf("ERROR: %s\n", childElem->valuestring);
 		//writes error/receipt to temp file for access by logging function
 		//this is probably not the best way to do this, but I didn't see anything in the libCurl docs
