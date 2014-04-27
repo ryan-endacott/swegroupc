@@ -90,6 +90,7 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
 
     // Define where it's going.
     curl_easy_setopt(curl, CURLOPT_URL, manager->endpoint);
+    //curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, jsonResponse);
     curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
 
     // Perform and handle the return value.
@@ -107,6 +108,9 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
     // Return the return value.
     return return_val;
 }
+
+//gets response from server in JSON format and logs the receipt or error and shows it to user
+
 
 /**
  * Submits many files denoted by an array of paths.
