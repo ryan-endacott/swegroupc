@@ -116,7 +116,8 @@ size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata) {
 	
 	//gets the first element
 	char *childElem = cJSON_GetArrayItem(root, 0);
-	
+	printf("%s\n", childElem);
+	cJSON_Delete(root);
 }
 
 /**
