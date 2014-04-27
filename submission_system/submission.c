@@ -60,26 +60,32 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
     curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "submission[assignment_name]",
             CURLFORM_COPYCONTENTS, assignmentName,
+            CURLFORM_CONTENTTYPE, "text",
             CURLFORM_END);
 	curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "submission[course_name]",
             CURLFORM_COPYCONTENTS, courseName,
+            CURLFORM_CONTENTTYPE, "text",
             CURLFORM_END);
      curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "submission[section_name]",
             CURLFORM_COPYCONTENTS, sectionName,
+            CURLFORM_CONTENTTYPE, "text",
             CURLFORM_END);
 	curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "submission[file][]",
             CURLFORM_FILE, file_path,
+            CURLFORM_CONTENTTYPE, "file",
             CURLFORM_END);
 	curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "pawprint",
             CURLFORM_COPYCONTENTS, pawprint,
+            CURLFORM_CONTENTTYPE, "text",
             CURLFORM_END);
 	curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "password",
             CURLFORM_COPYCONTENTS, "hi",
+            CURLFORM_CONTENTTYPE, "text",
             CURLFORM_END);
 
     // Define where it's going.
