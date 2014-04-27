@@ -49,7 +49,7 @@ void manager_destroy(submission_manager_t *manager)
  * Returns SUBMIT_SUCCESS if the operation was successful.
  * Otherwise, returns SUBMIT_FAILURE.
  */
-int submit(submission_manager_t *manager, const char *file_path)
+int submit(submission_manager_t *manager, const char *assignmentName, const char *courseName, const char *sectionName, const char *file_path, const char *pawprint)
 {
     // Prepare curl for a multipart http post.
     CURL *curl = curl_easy_init();
@@ -58,8 +58,28 @@ int submit(submission_manager_t *manager, const char *file_path)
     
     // Add the fields.
     curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[assignment_name]",
+            CURLFORM_COPYCONTENTS, assignmentName,
+            CURLFORM_END);
+	curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[course_name]",
+            CURLFORM_COPYCONTENTS, courseName,
+            CURLFORM_END);
+     curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[section_name]",
+            CURLFORM_COPYCONTENTS, sectionName,
+            CURLFORM_END);
+	curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "submission[file]",
             CURLFORM_FILE, file_path,
+            CURLFORM_END);
+	curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "pawprint",
+            CURLFORM_COPYCONTENTS, pawprint,
+            CURLFORM_END);
+	curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[file]",
+            CURLFORM_COPYCONTENTS, "test",
             CURLFORM_END);
 
     // Define where it's going.

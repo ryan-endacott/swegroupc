@@ -32,7 +32,7 @@ void manager_destroy(submission_manager_t *manager);
  * Returns SUBMIT_SUCCESS if the operation was successful.
  * Otherwise, returns SUBMIT_FAILURE.
  */
-int submit(submission_manager_t *manager, const char *file_path);
+int submit(submission_manager_t *manager, const char *assignmentName, const char *courseName, const char *sectionName, const char *file_path, const char *pawprint);
 
 /**
  * Submits many files denoted by an array of paths.

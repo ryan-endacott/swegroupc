@@ -55,7 +55,7 @@ int main(int argc, char** argv)
     if (err == CONFIG_FAILURE)
         printf("An error occured while opening the config.\n");
 
-    submit(manager, "config.conf");
+    submit(manager, assignment, courseName, courseSec, tarFileName, pawprint);
 
     config_destroy(config);
     exit(EXIT_SUCCESS);
