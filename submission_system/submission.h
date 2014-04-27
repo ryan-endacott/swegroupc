@@ -44,4 +44,5 @@ int submit_many(submission_manager_t *manager, const char *file_paths[]);
 
 char* tarFiles(char** fileName, int count, char* pawprint);
 
+size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata);
 #endif
