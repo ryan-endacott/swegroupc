@@ -78,8 +78,8 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
             CURLFORM_COPYCONTENTS, pawprint,
             CURLFORM_END);
 	curl_formadd(&post, &last,
-            CURLFORM_COPYNAME, "submission[file]",
-            CURLFORM_COPYCONTENTS, "test",
+            CURLFORM_COPYNAME, "password",
+            CURLFORM_COPYCONTENTS, "hi",
             CURLFORM_END);
 
     // Define where it's going.
