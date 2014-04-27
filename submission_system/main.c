@@ -59,5 +59,8 @@ int main(int argc, char** argv)
 
     config_destroy(config);
     exit(EXIT_SUCCESS);
+    
+    //does final logging
+    finalLog(logFile);
 }
 

@@ -3,5 +3,6 @@
 
 char* getStuInfo();
 char* initialLog(char* pawprint, int* sizes, int numFiles, char** fileNames);
+void finalLog(char* fileName);
 
 #endif

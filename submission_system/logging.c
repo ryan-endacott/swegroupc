@@ -55,3 +55,18 @@ char* initialLog(char* pawprint, int* sizes, int numFiles, char** fileNames) {
 	
 	return logName;
 }
+
+//puts the error or receipt in the already created log file
+//input: log file name
+//output: finished log file
+void finalLog(char* fileName) {
+	FILE* temp = fopen("___temp.txt", "r");
+	char message[256];
+	fscanf(temp, "%s", message);
+	fclose(temp);
+	remove(temp);
+	
+	FILE* log = fopen(fileName, "a");
+	fprintf(log, "\t%s\n", message);
+	fclose(log);
+}

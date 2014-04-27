@@ -116,8 +116,25 @@ size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata) {
 	
 	//gets the first element
 	cJSON *childElem = cJSON_GetArrayItem(root, 0);
-	printf("%s ----- %s\n", childElem->valuestring, childElem->string);
+	if (childElem->string == "error") {
+		printf("ERROR: %s\n", childElem->valuestring);
+		//writes error/receipt to temp file for access by logging function
+		//this is probably not the best way to do this, but I didn't see anything in the libCurl docs
+		//about passing custom values into the CURLOPT_WRITEFUNCTION
+		FILE* temp = fopen("___temp.txt", "w+");
+		fprintf(temp, "ERROR: %s\n", childElem->valuestring);
+		fclose(temp);
+	} else {
+		printf("RECEIPT: %s\n", childElem->valuestring);
+		FILE* temp = fopen("___temp.txt", "w+");
+		fprintf(temp, "RECEIPT: %s\n", childElem->valuestring);
+		fclose(temp);
+	}
+	
 	cJSON_Delete(root);
+	
+	//returns bytes written so curl doesn't see it as error
+	return nmemb * size;
 }
 
 /**
@@ -146,7 +163,6 @@ char* tarFiles(char** fileName, int count, char* pawprint) {
 		strcat(files,fileName[i+4]);		
 	}
 	
-	//TODO: use char* so it is dynamic
 	char outName[1000000];
 	strcpy(outName, pawprint);
 	strcat(outName, "_");
