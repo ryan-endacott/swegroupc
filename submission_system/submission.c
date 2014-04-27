@@ -122,12 +122,12 @@ size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata) {
 		//this is probably not the best way to do this, but I didn't see anything in the libCurl docs
 		//about passing custom values into the CURLOPT_WRITEFUNCTION
 		FILE* temp = fopen("___temp.txt", "w+");
-		fprintf(temp, "ERROR: %s\n", childElem->valuestring);
+		fprintf(temp, "ERROR: %s", childElem->valuestring);
 		fclose(temp);
 	} else {
 		printf("RECEIPT: %s\n", childElem->valuestring);
 		FILE* temp = fopen("___temp.txt", "w+");
-		fprintf(temp, "RECEIPT: %s\n", childElem->valuestring);
+		fprintf(temp, "RECEIPT: %s", childElem->valuestring);
 		fclose(temp);
 	}
 	
