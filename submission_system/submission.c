@@ -109,9 +109,13 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
     return return_val;
 }
 
-//gets response from server in JSON format and logs the receipt or error and shows it to user
+//gets response from server in JSON format, parses it and logs the receipt or error and shows it to user
 size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata) {
-	printf("%s\n", ptr);
+	
+	cJSON *root = cJSON_Parse(ptr);
+	char* out = cJSON_Print(root);
+	cJSON_Delete(root);
+	printf("%s\n", out);
 }
 
 /**
