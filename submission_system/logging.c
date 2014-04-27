@@ -54,11 +54,14 @@ void logSubmission(char* pawprint, int* sizes, int numFiles, char** fileNames) {
 	
 	//gets message from previously created temp file
 	FILE* temp = fopen("___temp.txt", "r");
-	char message[256];
-	fscanf(temp, "%s", message);
+	char line[256];
+	fprintf(log, "RESPONSE: \n");
+	fprintf(log, "\t");
+	while (fgets(line, sizeof line, temp) != NULL ) {
+         fprintf(log, "%s", line);
+     }
+      
 	fclose(temp);
-	remove("___temp.txt");
-	fprintf(log, "\t%s\n", message);
-	
+	remove("___temp.txt");	
 	fclose(log);	
 }
