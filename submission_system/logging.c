@@ -66,7 +66,9 @@ void finalLog(char* fileName) {
 	fclose(temp);
 	remove("___temp.txt");
 	
-	FILE* log = fopen(fileName, "a");
+	printf("%s\n", fileName);
+	
+	FILE* log = fopen(fileName, "a+");
 	fprintf(log, "\t%s\n", message);
 	fclose(log);
 }
