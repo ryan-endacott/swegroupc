@@ -32,7 +32,7 @@ void manager_destroy(submission_manager_t *manager);
  * Returns SUBMIT_SUCCESS if the operation was successful.
  * Otherwise, returns SUBMIT_FAILURE.
  */
-int submit(submission_manager_t *manager, const char *file_path);
+int submit(submission_manager_t *manager, const char *assignmentName, const char *courseName, const char *sectionName, const char *file_path, const char *pawprint);
 
 /**
  * Submits many files denoted by an array of paths.
@@ -42,14 +42,7 @@ int submit(submission_manager_t *manager, const char *file_path);
  */
 int submit_many(submission_manager_t *manager, const char *file_paths[]);
 
-/**
- * Submits an entire folder denoted by a given path.
- *
- * Returns SUBMIT_SUCCESS if the operation was successful.
- * Otherwise, returns SUBMIT_FAILURE.
- */
-int submit_folder(submission_manager_t *manager, const char *folder_path);
-
 char* tarFiles(char** fileName, int count, char* pawprint);
 
+size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata);
 #endif

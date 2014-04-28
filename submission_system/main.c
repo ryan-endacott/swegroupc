@@ -15,6 +15,7 @@
 #include "config.h"
 #include "fileInfo.h"
 #include "logging.h"
+#include "lib/cJSON.h"
 
 #define CONFIG_PATH "config.conf"
 
@@ -26,8 +27,9 @@ int main(int argc, char** argv)
 		return 1;
 
 	//gets course section and assignment
-	char* courseSec = argv[1];
-	char* assignment = argv[2];
+	char* courseName = argv[1];
+	char* courseSec = argv[2];
+	char* assignment = argv[3];
 	
 	//checks if files submitted exists and stores their size in array
 	int fileSizes[numFiles];
@@ -38,9 +40,6 @@ int main(int argc, char** argv)
 	
 	//gets student's pawprint
 	char* pawprint = getStuInfo();
-
-	//logs info about submission
-	char* logFile = initialLog(pawprint, fileSizes, numFiles, argv);
 	
 	//compresses files into tarball
 	char* tarFileName = tarFiles(argv, numFiles, pawprint);
@@ -53,9 +52,10 @@ int main(int argc, char** argv)
     if (err == CONFIG_FAILURE)
         printf("An error occured while opening the config.\n");
 
-    submit(manager, "config.conf");
-
+    submit(manager, assignment, courseName, courseSec, tarFileName, pawprint);
     config_destroy(config);
-    exit(EXIT_SUCCESS);
+    
+    //does final logging
+    logSubmission(pawprint, fileSizes, numFiles, argv);
 }
 

@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <curl/curl.h>
 #include "submission.h"
+#include "lib/cJSON.h"
 
 /**
  * Initializes the manager with a given endpoint.
@@ -42,15 +43,13 @@ void manager_destroy(submission_manager_t *manager)
     free(manager);
 }
 
-/* TODO: USE HTTPS */
-
 /**
  * Submits a file denoted by a given path.
  *
  * Returns SUBMIT_SUCCESS if the operation was successful.
  * Otherwise, returns SUBMIT_FAILURE.
  */
-int submit(submission_manager_t *manager, const char *file_path)
+int submit(submission_manager_t *manager, const char *assignmentName, const char *courseName, const char *sectionName, const char *file_path, const char *pawprint)
 {
     // Prepare curl for a multipart http post.
     CURL *curl = curl_easy_init();
@@ -59,12 +58,39 @@ int submit(submission_manager_t *manager, const char *file_path)
     
     // Add the fields.
     curl_formadd(&post, &last,
-            CURLFORM_COPYNAME, "submission[file]",
+            CURLFORM_COPYNAME, "submission[assignment_name]",
+            CURLFORM_COPYCONTENTS, assignmentName,
+            CURLFORM_CONTENTTYPE, "text",
+            CURLFORM_END);
+	curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[course_name]",
+            CURLFORM_COPYCONTENTS, courseName,
+            CURLFORM_CONTENTTYPE, "text",
+            CURLFORM_END);
+     curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[section_name]",
+            CURLFORM_COPYCONTENTS, sectionName,
+            CURLFORM_CONTENTTYPE, "text",
+            CURLFORM_END);
+	curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "submission[file][]",
             CURLFORM_FILE, file_path,
+            CURLFORM_CONTENTTYPE, "file",
+            CURLFORM_END);
+	curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "pawprint",
+            CURLFORM_COPYCONTENTS, pawprint,
+            CURLFORM_CONTENTTYPE, "text",
+            CURLFORM_END);
+	curl_formadd(&post, &last,
+            CURLFORM_COPYNAME, "password",
+            CURLFORM_COPYCONTENTS, "hi",
+            CURLFORM_CONTENTTYPE, "text",
             CURLFORM_END);
 
     // Define where it's going.
     curl_easy_setopt(curl, CURLOPT_URL, manager->endpoint);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, jsonResponse);
     curl_easy_setopt(curl, CURLOPT_HTTPPOST, post);
 
     // Perform and handle the return value.
@@ -83,6 +109,34 @@ int submit(submission_manager_t *manager, const char *file_path)
     return return_val;
 }
 
+//gets response from server in JSON format, parses it and logs the receipt or error and shows it to user
+size_t jsonResponse(char *ptr, size_t size, size_t nmemb, void *userdata) {
+	
+	cJSON *root = cJSON_Parse(ptr);
+	
+	//gets the first element
+	cJSON *childElem = cJSON_GetArrayItem(root, 0);
+	if (strcmp(childElem->string, "error") == 0) {
+		printf("ERROR: %s\n", childElem->valuestring);
+		//writes error/receipt to temp file for access by logging function
+		//this is probably not the best way to do this, but I didn't see anything in the libCurl docs
+		//about passing custom values into the CURLOPT_WRITEFUNCTION
+		FILE* temp = fopen("___temp.txt", "w+");
+		fprintf(temp, "ERROR: %s", childElem->valuestring);
+		fclose(temp);
+	} else {
+		printf("RECEIPT: %s\n", childElem->valuestring);
+		FILE* temp = fopen("___temp.txt", "w+");
+		fprintf(temp, "RECEIPT: %s", childElem->valuestring);
+		fclose(temp);
+	}
+	
+	cJSON_Delete(root);
+	
+	//returns bytes written so curl doesn't see it as error
+	return nmemb * size;
+}
+
 /**
  * Submits many files denoted by an array of paths.
  *
@@ -94,22 +148,8 @@ int submit_many(submission_manager_t *manager, const char *file_paths[])
     return SUBMIT_FAILURE;
 }
 
-/**
- * Submits an entire folder denoted by a given path.
- *
- * Returns SUBMIT_SUCCESS if the operation was successful.
- * Otherwise, returns SUBMIT_FAILURE.
- */
-int submit_folder(submission_manager_t *manager, const char *folder_path)
-{
-    return SUBMIT_FAILURE;
-}
-
 //compresses submitted files into tarball
 char* tarFiles(char** fileName, int count, char* pawprint) {
-	/*FILE* command;
-	char path[1035];	
-	command = popen("ifconfig | grep inet", "r");*/
 	
 	FILE* proc;
 	char command[1000000];
@@ -117,10 +157,10 @@ char* tarFiles(char** fileName, int count, char* pawprint) {
 	
 	//appends file names to command to execute
 	int i = 0;
-	strcpy(files, fileName[i+3]);
+	strcpy(files, fileName[i+4]);
 	for (i = 1; i < count; i++) {
 		strcat(files, " ");
-		strcat(files,fileName[i+3]);		
+		strcat(files,fileName[i+4]);		
 	}
 	
 	char outName[1000000];
@@ -129,6 +169,8 @@ char* tarFiles(char** fileName, int count, char* pawprint) {
 	strcat(outName, fileName[1]);
 	strcat(outName, "_");
 	strcat(outName, fileName[2]);
+	strcat(outName, "_");
+	strcat(outName, fileName[3]);
 	strcat(outName, ".tar");
 	
 	int len;
@@ -139,6 +181,7 @@ char* tarFiles(char** fileName, int count, char* pawprint) {
 		printf("too long\n");
 		return NULL;
 	}
+	pclose(proc);
 	
 	return outName;
 }
