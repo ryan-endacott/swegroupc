@@ -1,7 +1,7 @@
 class MizzouLdap
 
   # Authenticates with Mizzou LDAP Server
-  # Returns false if invalid credentials
+  # Returns nil if invalid credentials
   # or the user logged in if successful
   def self.authenticate(username, password)
 
@@ -27,6 +27,6 @@ class MizzouLdap
     end
 
     # auth failure
-    return false
+    return nil
   end
 end
