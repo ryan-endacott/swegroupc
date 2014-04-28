@@ -9,6 +9,7 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <curl/curl.h>
 #include "submission.h"
 #include "lib/cJSON.h"
@@ -51,6 +52,9 @@ void manager_destroy(submission_manager_t *manager)
  */
 int submit(submission_manager_t *manager, const char *assignmentName, const char *courseName, const char *sectionName, const char *file_path, const char *pawprint)
 {
+	//gets student's password
+	char* password = getpass("Password: ");
+		
     // Prepare curl for a multipart http post.
     CURL *curl = curl_easy_init();
     struct curl_httppost *post = NULL;
@@ -84,7 +88,7 @@ int submit(submission_manager_t *manager, const char *assignmentName, const char
             CURLFORM_END);
 	curl_formadd(&post, &last,
             CURLFORM_COPYNAME, "password",
-            CURLFORM_COPYCONTENTS, "hi",
+            CURLFORM_COPYCONTENTS, password,
             CURLFORM_CONTENTTYPE, "text",
             CURLFORM_END);
 
@@ -185,4 +189,3 @@ char* tarFiles(char** fileName, int count, char* pawprint) {
 	
 	return outName;
 }
-
