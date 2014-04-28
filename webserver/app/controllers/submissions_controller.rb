@@ -67,14 +67,15 @@ class SubmissionsController < ApplicationController
 
     user = current_user || MizzouLdap.authenticate(params[:pawprint], params[:password])
 
+    if user.nil?
+      render json: { error: 'Failed to authenticate.  Incorrect pawprint and password.' } and return
+    end
+
     # Can't submit as instructor
     if user.instructor?
       render json: { error: 'That user is a professor and cannot submit assignments.'} and return
     end
 
-    if user.nil?
-      render json: { error: 'Failed to authenticate.  Incorrect pawprint and password.' }
-    end
 
     @submission = Submission.new(submission_params)
 
