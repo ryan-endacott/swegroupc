@@ -8,16 +8,11 @@ class Course < ActiveRecord::Base
 
   validates :name, uniqueness: true
 
-  # Get a null section by default if none exist
-  def sections_with_default
-    s = regular_sections
-    if s.empty?
-      s = [Section.new(name: 'NULL')]
-    end
-    return s
+  before_create :create_initial_section
+
+
+  def create_initial_section
+    self.sections.build(name: 'A')
   end
 
-  # Get a null section by default if none exist
-  alias_method :regular_sections, :sections
-  alias_method :sections, :sections_with_default
 end

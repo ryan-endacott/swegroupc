@@ -18,7 +18,9 @@ class CoursesController < ApplicationController
   end
 
   def delete_section
-    if @course.sections.destroy(params[:section_id])
+    if @course.sections.count <= 1
+      flash[:error] = 'Failed to delete section.  A course must have at least one section.'
+    elsif @course.sections.destroy(params[:section_id])
       flash[:notice] = 'Successfully deleted section.'
     else
       flash[:error] = 'Failed to delete section.'

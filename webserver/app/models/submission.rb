@@ -22,20 +22,6 @@ class Submission < ActiveRecord::Base
     super
   end
 
-
-  # Get a null section by default if no section associated
-  def section_with_default
-    s = regular_section
-    if s.nil?
-      s = Section.new(name: 'NULL')
-    end
-    return s
-  end
-
-  # Get a null section by default if no section associated
-  alias_method :regular_section, :section
-  alias_method :section, :section_with_default
-
   # For simple form
   attr_accessor :assignment_name, :section_name, :course_name
 
