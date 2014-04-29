@@ -124,7 +124,7 @@ class AssignmentsController < ApplicationController
     def assignment_params
       p = params.require(:assignment).permit(:name, :due_date)
       if p[:due_date]
-        dd = ActiveSupport::TimeWithZone(nil, Time.zone, Time.strptime(p[:due_date], '%m/%d/%Y %H:%M %p'))
+        dd = ActiveSupport::TimeWithZone.new(nil, Time.zone, Time.strptime(p[:due_date], '%m/%d/%Y %H:%M %p'))
       end
       p[:due_date] = dd
       return p
