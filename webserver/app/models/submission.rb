@@ -24,8 +24,8 @@ class Submission < ActiveRecord::Base
 
   # created_at in central time
   def submit_time
-    return nil if self.submit_time.nil?
-    self.submit_time.in_time_zone(Time.zone)
+    return nil if self.created_at.nil?
+    self.created_at.in_time_zone(Time.zone)
   end
 
   # For simple form
