@@ -3,6 +3,14 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
 
+  def after_sign_in_path_for(user)
+    if user.instructor? || user.ta?
+      courses_path
+    else
+      new_submission_path
+    end
+  end
+
   private
 
     def instructors_and_tas_only!
