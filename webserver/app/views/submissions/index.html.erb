@@ -18,7 +18,7 @@
         <tr>
           <td><%= submission.course.name %></td>
           <td><%= submission.assignment.name %></td>
-          <td><%= submission.created_at.to_s(:pretty) %></td>
+          <td><%= submission.submit_time.to_s(:pretty) %></td>
           <td><%= submission.submission_files.count %></td>
           <td><%= submission.receipt %></td>
           <td><%= link_to 'Download', download_submission_path(submission), class: 'btn btn-primary' %></td>

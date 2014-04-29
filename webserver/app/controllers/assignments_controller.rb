@@ -26,8 +26,8 @@ class AssignmentsController < ApplicationController
             current_folder = base_folder.gsub('<SECTIONREPLACEME>', submission.section.name)
             current_folder << submission.user.pawprint + '/'
             current_folder << 'attempt' + submission.attempt_number.to_s + '_'
-            current_folder << 'LATE_' if @assignment.due_date <  submission.created_at
-            current_folder << submission.created_at.to_s + '/'
+            current_folder << 'LATE_' if @assignment.due_date <  submission.submit_time
+            current_folder << submission.submit_time.to_s + '/'
 
             zos.put_next_entry(current_folder + file.filename)
             zos.print(file.file_contents)
