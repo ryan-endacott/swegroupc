@@ -22,12 +22,6 @@ class Submission < ActiveRecord::Base
     super
   end
 
-  # created_at in central time
-  def submit_time
-    return nil if self.created_at.nil?
-    self.created_at.in_time_zone(Time.zone)
-  end
-
   # For simple form
   attr_accessor :assignment_name, :section_name, :course_name
 
